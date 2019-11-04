@@ -1,0 +1,24 @@
+.navbar {
+	font-family: "Open Sans", sans-serif;
+	font-size: 1.5em;
+	color: #FCFCFC;
+	background-color: #4ABDAC;
+	z-index: 1000;
+	position: fixed;
+	box-shadow: 0px 0px 45px #888888;
+	top: 0;
+	width: 100%;
+	height: relative;
+	overflow: hidden;
+}
+
+.navbar h1 {
+	margin: 0.1em;
+}
+
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	/*background-color: #EAEAEA;*/
+}
