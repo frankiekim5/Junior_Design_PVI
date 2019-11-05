@@ -43,6 +43,8 @@
 	width: 100%;
 	height: relative;
 	overflow: hidden;
+	display: table;
+	table-layout: fixed;
 }
 
 .taskbar ul {
@@ -51,21 +53,24 @@
 	text-align: center;
 	margin: 0;
 	height: 100%;
+	display: table-row;
 }
 
 .taskbar ul li {
-	display: inline-block;
+	display: table-cell;
 	list-style: none;
+	/*border:none;*/
 	border-right: 4px solid #81CF8D;
-	width: 24%;
+	/*width: 25%;*/
 }
 
 .taskbar ul li:last-child {border-right:none;}
 
-.taskbar ul li button {
+.taskBarButton {
 	width: 100%;
 	z-index: 1;
 	margin: 0;
+	/*border-right: 4px solid #81CF8D;*/
 	padding: 2.7em 1em;
 	font-family: 'Open Sans', sans-serif;
 	border: none;
@@ -80,6 +85,7 @@
 }
 
 .selectedTBI {
+	/*border-left:;*/
 	background-color: #81CF8D;
 }
 

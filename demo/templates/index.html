@@ -10,12 +10,15 @@
 <body scroll="no">
 	<div class="navbar">
 		<button id="backButton">&lsaquo;</button>
-		<center><h1>PVI</h1></center>
+		<center><h1 id="title">PVI</h1></center>
 	</div>
 	<div class="taskbar">
-		<center><ul>
-			<li><button>Health</button></li><li><button>Pantry</button></li><li><button>Meals</button></li><li><button>Settings</button></li>
-		</ul></center>
+		<ul>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='healthButton' name="Health">Health</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='pantryButton' name="Pantry">Pantry</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='mealsButton' name="Meals">Meals</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='settingsButton' name="Settings">Settings</button></li>
+		</ul>
 	</div>
 	<!-- <iframe src="https://www.wikipedia.org" height="1000" width="500"/> -->
 </body>
