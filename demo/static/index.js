@@ -11,6 +11,9 @@ let taskbarClick = (elem) => {
 	
 	// Change title text
 	const title = $(elem).attr("name")
+	if (viewStack[viewStack.length - 1] === title) {
+		return
+	}
 	viewStack.push(title)	// In the future, we should make this into an object, {title: , screen: }
 	$("#title").text(title)
 	// TODO: Actually show the page
@@ -18,8 +21,8 @@ let taskbarClick = (elem) => {
 }
 
 $(document).ready(() => {
-	$("#backButton").click(() => {
-		console.log("WHAT?")
+	$("#backButton").click(() => { //TODO: Actually change the screen
+		// console.log("WHAT?")
 		const currentView = viewStack.pop()
 		
 		if (viewStack.length == 0) {
