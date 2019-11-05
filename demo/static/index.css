@@ -52,7 +52,7 @@
 	padding: 0;
 	text-align: center;
 	margin: 0;
-	height: 100%;
+	height: relative;
 	display: table-row;
 }
 
@@ -70,14 +70,24 @@
 	width: 100%;
 	z-index: 1;
 	margin: 0;
+	height: relative;
 	/*border-right: 4px solid #81CF8D;*/
-	padding: 2.7em 1em;
+	padding: 0em 0em;
 	font-family: 'Open Sans', sans-serif;
 	border: none;
 	background: transparent;
 	&:focus {
 		outline: none;
 	}
+}
+
+.taskBarButton img {
+	max-width: 60%;
+	max-height: 5vh;
+}
+
+.taskBarButton p {
+	margin: 0;
 }
 
 .taskBarItem {

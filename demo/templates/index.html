@@ -15,9 +15,16 @@
 	</div>
 	<div class="taskbar">
 		<ul>
-			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='healthButton' name="Health">Health</button></li>
-			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='pantryButton' name="Pantry">Pantry</button></li>
-			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='mealsButton' name="Meals">Meals</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='healthButton' name="Health">
+				<center><img width=""src="{{ url_for('static', filename='health.svg') }}"/></center>
+				<p>Health</p>
+			</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='pantryButton' name="Pantry">
+				<center><img width=""src="{{ url_for('static', filename='pantry.svg') }}"/></center>
+				<p>Pantry</p>
+			</button></li>
+			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='mealsButton' name="Meals"><center><img width=""src="{{ url_for('static', filename='meals.svg') }}"/></center>
+				<p>Meals</p></button></li>
 			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='settingsButton' name="Settings">Settings</button></li>
 		</ul>
 	</div>
