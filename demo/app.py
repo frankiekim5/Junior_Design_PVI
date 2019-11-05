@@ -18,7 +18,8 @@ def login():
 
 @app.route('/home')
 def home():
-	return render_template("home.html")
+	print(render_template("home.html", name="test"))
+	return render_template("home.html", name="test")
 
 
 @app.route('/pantry')

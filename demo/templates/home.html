@@ -2,13 +2,16 @@
 <html>
 <head>
 	<title>Home</title>
-
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	<link href="{{ url_for('static', filename='home.css') }}" rel="stylesheet" />
 </head>
 <body>
 
-<h1>Welcome back<br/>Michael!</h1>
-<h2>User statistics</h2>
+<div id="homeContainer">
+	<h1 id="homeWelcomeTitle">Welcome back<br/>{{ name }}!</h1>
+	<h2>User statistics</h2>
+</div>
 
 
 

@@ -30,6 +30,17 @@ $(document).ready(() => {
 			$(".taskBarButton").removeClass("selectedTBI")
 			$("#backButton").css('visibility', 'hidden')
 			return
+		} else if (taskbars.includes(currentView)){
+			let last_task = "PVI" //This logic might break
+			for (let i = viewStack.length - 1; i >= 0; i--) {
+				if (taskbars.includes(viewStack[i])) {
+					last_task = viewStack[i]
+					break
+				}
+			}
+			$('.taskBarButton').removeClass("selectedTBI")
+			$('#' + last_task.toLowerCase() + "Button").addClass("selectedTBI")
+			$("#title").text(viewStack[viewStack.length - 1])
 		} else {
 			let last_task = "PVI" //This logic might break
 			for (let i = viewStack.length - 1; i >= 0; i--) {

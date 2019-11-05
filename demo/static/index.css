@@ -1,6 +1,6 @@
 .navbar {
 	font-family: "Open Sans", sans-serif;
-	font-size: 1.5em;
+	font-size: 1.3em;
 	color: #8CF;
 	background-color: #D1FFDD;
 	z-index: 1000;
@@ -103,6 +103,7 @@ button:focus {
 }
 
 body {
+	font-family: "Open Sans", sans-serif;
 	width: 100%;
 	margin: 0;
 	padding: 0;

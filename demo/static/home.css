@@ -11,3 +11,34 @@ about spacings too much
 
 
 */
+
+#homeContainer {
+	width: 90%;
+	margin: 8% 5%;
+}
+
+
+#homeWelcomeTitle {
+	font-size: 2em;
+	color:black;
+}
+
+
+/* GENERICS */
+
+button {
+	border: none;
+	background: transparent;
+}
+
+button:focus {
+	outline:none;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #ECFAEF;
+}
