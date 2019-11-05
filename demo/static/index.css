@@ -1,15 +1,63 @@
 .navbar {
 	font-family: "Open Sans", sans-serif;
 	font-size: 1.5em;
-	color: #FCFCFC;
-	background-color: #4ABDAC;
+	color: #8CF;
+	background-color: #D1FFDD;
 	z-index: 1000;
 	position: fixed;
-	box-shadow: 0px 0px 45px #888888;
+	box-shadow: 0px 0px 30px #A8B8C8;
 	top: 0;
 	width: 100%;
 	height: relative;
 	overflow: hidden;
+}
+
+.taskbar {
+	font-family: "Open Sans", sans-serif;
+	font-size: 0.8em;
+	color: #8CF;
+	background-color: #D1FFDD;
+	z-index: 1000;
+	position: fixed;
+	box-shadow: 0px 0px 30px #A8B8C8;
+	bottom: 0;
+	width: 100%;
+	height: relative;
+	overflow: hidden;
+}
+
+.taskbar ul {
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	margin: 0;
+	height: 100%;
+}
+
+.taskbar ul li {
+	display: inline-block;
+	list-style: none;
+	border-right: 4px solid #81CF8D;
+	width: 24%;
+}
+
+.taskbar ul li:last-child {border-right:none;}
+
+.taskbar ul li button {
+	width: 100%;
+	z-index: 1;
+	margin: 0;
+	padding: 2.7em 1em;
+	font-family: 'Open Sans', sans-serif;
+	border: none;
+	background: transparent;
+	&:focus {
+		outline: none;
+	}
+}
+
+button:focus {
+	outline:none;
 }
 
 .navbar h1 {
@@ -20,5 +68,13 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	/*background-color: #EAEAEA;*/
+	background-color: #ECFAEF;
+}
+
+.taskBarItem {
+
+}
+
+.selectedTBI {
+	background-color: ;
 }
