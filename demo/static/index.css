@@ -33,7 +33,6 @@
 	width: relative;
 	padding-left: 0;
 	padding-top: 10%;
-	margin-
 }
 
 .navbar #selectAll {
@@ -166,6 +165,42 @@
 	color:black;
 }
 
+
+/*PANTRY*/
+#pantryTrashButton {
+	/*visibility: hidden;*/
+	
+	/*: min(50vw, 300px);*/
+	background-color: #C4FFF5;
+	padding: 1rem 1rem;
+	
+	-webkit-clip-path: circle(40%);
+	clip-path: circle(40%);
+	clip: circle(40%);
+	z-index: -1;
+}
+
+#pantryTrashButton img {
+	max-height: 30pt;
+	height: 7vh;
+}
+
+#pantryTrashWrap {
+	display:block;
+	position: fixed;
+	bottom: 10vh;
+	right: 5vh;	
+	filter: drop-shadow(0 0 15px #A8B8C8);
+	right: min(5vh, 3%);
+}
+
+#pantryContainer {
+	width: 90%;
+	padding: 5vh 5%;
+	height: 0px;
+}
+
+/*-------------------------------*/
 
 /*GENERICS*/
 

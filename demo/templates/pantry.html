@@ -1,13 +1,28 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 	<title>Pantry</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	<link href="{{ url_for('static', filename='pantry.css') }}" rel="stylesheet" />
 
-
-</head>
+</head> -->
 <body>
 
+<div id="pantryContainer">
+	Test
 
+	<span id='pantryTrashWrap'>
+		<button id="pantryTrashButton">
+			<img src="{{ url_for('static', filename='trash_black.svg') }}"/>
+		</button>
+	</span>
 
+</div>
+
+<!-- 
 </body>
-</html>
+<button id="pantryTrashButton">
+			<img src="{{ url_for('static', filename='trash_black.svg') }}"/>
+		</button>
+</html> -->

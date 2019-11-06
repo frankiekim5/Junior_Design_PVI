@@ -11,3 +11,80 @@ about spacings too much
 
 
 */
+
+#pantryTrashButton {
+	/*visibility: hidden;*/
+	position: absolute;
+	bottom: 5%;
+	right: 5vh;
+	background-color: green;
+	padding: 1.5rem 1.5rem;
+	clip-path: circle(40%);
+	-webkit-clip-path: circle(40%);
+}
+
+#pantryTrashButton img {
+	height: 100pt;
+	max-height: 5vh;
+}
+
+#pantryContainer {
+	width: 95%;
+	margin: 8% 2.5%;
+	/*height: 100%;*/
+}
+
+#pantryTrashButton {
+	/*visibility: hidden;*/
+	
+	/*: min(50vw, 300px);*/
+	background-color: #C4FFF5;
+	padding: 1rem 1rem;
+	
+	-webkit-clip-path: circle(40%);
+	clip-path: circle(40%);
+	clip: circle(40%);
+	z-index: -1;
+}
+
+#pantryTrashButton img {
+	max-height: 30pt;
+	height: 7vh;
+}
+
+#pantryTrashWrap {
+	display:block;
+	position: fixed;
+	bottom: 10vh;
+	right: 5vh;
+	z-index: 100;
+	text-decoration:blink;
+	right: min(5vh, 3%);
+	filter: drop-shadow(0 0 15px #A8B8C8);
+}
+
+#pantryContainer {
+	width: 90%;
+	padding: 5vh 5%;
+	height: 0px;
+}
+
+
+/* GENERICS */
+
+button {
+	border: none;
+	background: transparent;
+}
+
+button:focus {
+	outline:none;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #ECFAEF;
+}

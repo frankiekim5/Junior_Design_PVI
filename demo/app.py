@@ -9,7 +9,8 @@ app = Flask(__name__)
 def main():
 	if request.method == "POST":
 		return render_template("index.html")
-	page = render_template("home.html", name="Evelyn S.")
+	# page = render_template("home.html", name="Evelyn S.")
+	page = render_template("pantry.html")
 	# print(type(page))
 	return render_template("index.html", page=Markup(page))
 
@@ -20,13 +21,14 @@ def login():
 
 @app.route('/home')
 def home():
-	print(render_template("home.html", name="test"))
-	return render_template("home.html", name="test")
+	page = render_template("home.html", name="test")
+	return render_template("index.html", page=Markup(page))
 
 
 @app.route('/pantry')
 def pantry():
 	return render_template("pantry.html")
+	return render_template("index.html", page=Markup(page))
 
 @app.route('/meals')
 def meals():
