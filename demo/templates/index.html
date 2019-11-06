@@ -11,28 +11,33 @@
 <body scroll="no">
 	<div class="navbar">
 		<button id="backButton">&lsaquo;</button>
-		<center><h1 id="title">PVI</h1></center>
+		<h1 id="title">PVI</h1>
+		<div id="removeOptions">
+			<button id="trashButton"><img src="{{ url_for('static', filename='trash.svg') }}"/></button>
+		</div>
 	</div>
 	<div class="taskbar">
 		<ul>
 			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='healthButton' name="Health">
-				<center><img width=""src="{{ url_for('static', filename='health.svg') }}"/></center>
+				<center><img src="{{ url_for('static', filename='health.svg') }}"/></center>
 				<p>Health</p>
 			</button></li>
 			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='pantryButton' name="Pantry">
-				<center><img width=""src="{{ url_for('static', filename='pantry.svg') }}"/></center>
+				<center><img src="{{ url_for('static', filename='pantry.svg') }}"/></center>
 				<p>Pantry</p>
 			</button></li>
 			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='mealsButton' name="Meals">
-				<center><img width=""src="{{ url_for('static', filename='meals.svg') }}"/></center>
+				<center><img src="{{ url_for('static', filename='meals.svg') }}"/></center>
 				<p>Meals</p>
 			</button></li>
 			<li><button class="taskBarButton" onclick="taskbarClick(this)" id='settingsButton' name="Settings">
-				<center><img width=""src="{{ url_for('static', filename='settings.svg') }}"/></center>
+				<center><img src="{{ url_for('static', filename='settings.svg') }}"/></center>
 				<p>Settings</p>
 			</button></li>
 		</ul>
 	</div>
-	<!-- <iframe src="https://www.wikipedia.org" height="1000" width="500"/> -->
+	<div id="container">
+		{{ page }}
+	</div>
 </body>
 </html>

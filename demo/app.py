@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for, escape, render_template
+from flask import Flask, flash, request, redirect, url_for, escape, render_template, Markup
 import requests
 import json
 
@@ -9,7 +9,9 @@ app = Flask(__name__)
 def main():
 	if request.method == "POST":
 		return render_template("index.html")
-	return render_template("index.html")
+	page = render_template("home.html", name="Evelyn S.")
+	# print(type(page))
+	return render_template("index.html", page=Markup(page))
 
 
 @app.route('/login')

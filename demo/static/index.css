@@ -3,14 +3,40 @@
 	font-size: 1.3em;
 	color: #8CF;
 	background-color: #D1FFDD;
-	z-index: 1000;
+	z-index: 99;
 	position: fixed;
 	box-shadow: 0px 0px 30px #A8B8C8;
 	top: 0;
 	width: 100%;
 	height: relative;
 	overflow: hidden;
+	text-align: center;
+	/*min-height: 8vh;*/
+	height: relative;
 }
+
+.navbar #removeOptions {
+	display:inline-block;
+	position:absolute;
+	right: 0rem;
+	top: 0;
+	z-index: 100;
+	/*visibility: hidden;*/
+	height: 100%;
+	width: auto;
+}
+.navbar #trashButton {
+	height: 100%;
+	outline:none;
+	background:transparent;
+	width: relative;
+}
+
+#trashButton img {
+	height: 35%;
+	width: auto;
+}
+
 
 .navbar #backButton {
 	display:inline-block;
@@ -20,15 +46,22 @@
 	color: #48F;
 	visibility: hidden;
 	padding-left: 2rem;
-	font-size: 2.2em;
+	font-size: 2em;
 	font-family: "Open Sans", sans-serif;
 	background:transparent;
 	height: auto;
+	outline:none;
 }
 
 .navbar h1 {
 	display: inline-block;
 	margin: 0.1em;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .taskbar {
@@ -36,7 +69,7 @@
 	font-size: 0.8em;
 	color: #8CF;
 	background-color: #D1FFDD;
-	z-index: 1000;
+	z-index: 99;
 	position: fixed;
 	box-shadow: 0px 0px 30px #A8B8C8;
 	bottom: 0;
@@ -99,13 +132,32 @@
 	background-color: #81CF8D;
 }
 
+#container {
+	margin: 6vh 0;
+	height: 88vh;
+	z-index: -1;
+	/*background-color: green;*/
+}
+
+#homeContainer {
+	width: 90%;
+	padding: 5vh 5%;
+}
+
+
+#homeWelcomeTitle {
+	font-size: 2em;
+	color:black;
+}
 
 
 /*GENERICS*/
 
 button {
 	border: none;
+	touch-action: manipulation;
 	background: transparent;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 button:focus {
@@ -113,6 +165,7 @@ button:focus {
 }
 
 body {
+	touch-action: manipulation;
 	font-family: "Open Sans", sans-serif;
 	width: 100%;
 	margin: 0;

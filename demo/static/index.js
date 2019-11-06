@@ -1,6 +1,8 @@
 let viewStack = []
 const taskbars = ["Health", "Pantry", "Meals", "Settings"]
 
+let uuid = null
+
 let taskbarClick = (elem) => {
 	// change selected taskbar button
 	$(".taskBarButton").removeClass("selectedTBI")
@@ -21,6 +23,7 @@ let taskbarClick = (elem) => {
 }
 
 $(document).ready(() => {
+	document.addEventListener("touchstart", function(){}, true)
 	$("#backButton").click(() => { //TODO: Actually change the screen
 		// console.log("WHAT?")
 		const currentView = viewStack.pop()
