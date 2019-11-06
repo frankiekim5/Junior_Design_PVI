@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Home</title>
@@ -7,14 +7,23 @@
 	<link href="{{ url_for('static', filename='home.css') }}" rel="stylesheet" />
 </head>
 <body>
- -->
+
+
+{%- macro home(name) -%}
+{# CODE BELOW #}
+
 <div id="homeContainer">
 	<h1 id="homeWelcomeTitle">Hello,<br/>{{ name }}!</h1>
 	<h2>User statistics</h2>
 	<p><i>The last time you visited was 11/4/2019. Welcome back!</i></p>
 </div>
-<!-- 
+
+
+{# DO NOT CODE PAST THIS LINE#}
+{%- endmacro %}
+
+{{ home("Evelyn S.") }}
 
 
 </body>
-</html> -->
+</html>

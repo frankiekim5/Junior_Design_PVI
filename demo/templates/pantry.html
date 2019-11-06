@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Pantry</title>
@@ -6,12 +6,15 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
 	<link href="{{ url_for('static', filename='pantry.css') }}" rel="stylesheet" />
 
-</head> -->
+</head>
 <body>
+
+{%- macro pantry() -%}
+{# CODE BELOW #}
+
 
 <div id="pantryContainer">
 	Test
-
 	<span id='pantryTrashWrap'>
 		<button id="pantryTrashButton">
 			<img src="{{ url_for('static', filename='trash_black.svg') }}"/>
@@ -20,9 +23,10 @@
 
 </div>
 
-<!-- 
+{# DO NOT CODE PAST THIS LINE#}
+{%- endmacro %}
+
+{{ pantry() }}
+
 </body>
-<button id="pantryTrashButton">
-			<img src="{{ url_for('static', filename='trash_black.svg') }}"/>
-		</button>
-</html> -->
+</html>
