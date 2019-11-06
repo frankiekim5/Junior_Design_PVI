@@ -1,5 +1,4 @@
 from flask import Flask, flash, request, redirect, url_for, escape, render_template, Markup
-import requests
 import json
 import re
 
