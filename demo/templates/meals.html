@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Meals</title>
-
-
+	<!-- <title>Meals</title> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	<link href="{{ url_for('static', filename='meals.css') }}" rel="stylesheet" />
 </head>
 <body>
 
+
+{%- macro home(name) -%}
+{# CODE BELOW #}
+
+<div id="mealsContainer">
+	Meals Test
+</div>
+
+
+{# DO NOT CODE PAST THIS LINE#}
+{%- endmacro %}
+
+{{ home("Evelyn S.") }}
 
 
 </body>

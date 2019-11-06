@@ -1,7 +1,13 @@
 from flask import Flask, flash, request, redirect, url_for, escape, render_template, Markup
 import requests
 import json
+import re
 
+
+def page(url, **kwargs):
+	page = (re.findall(r"<body>(.*)</body>", str(render_template(url, **kwargs)), flags=(re.M|re.S))[0])
+	page = Markup(page)
+	return page
 
 app = Flask(__name__)
 
@@ -9,8 +15,8 @@ app = Flask(__name__)
 def main():
 	if request.method == "POST":
 		return render_template("index.html")
-	# print(type(page))
-	return render_template("index.html", name="Evelyn S.")
+	
+	return render_template("index.html", page=page('home.html', name="Evelyn S."))
 
 
 @app.route('/login')
@@ -19,21 +25,24 @@ def login():
 
 @app.route('/home')
 def home():
-	return render_template("index.html", page=Markup(page))
+	return render_template("index.html", page=page("home.html", name="Evelyn S."))
 
 
 @app.route('/pantry')
 def pantry():
-	return render_template("pantry.html")
-	# return render_template("index.html")
+	return render_template("index.html", page=page("pantry.html"))
 
 @app.route('/meals')
 def meals():
-	return render_template("meals.html")
+	return render_template("index.html", page=page("meals.html"))
+
+@app.route('/health')
+def health():
+	return render_template("index.html", page=page("health.html"))
 
 @app.route('/settings')
 def settings():
-	return render_template("settings.html")
+	return render_template("index.html", page=page("settings.html"))
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', threaded=True, debug=True)
