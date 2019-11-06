@@ -2,12 +2,26 @@
 <html>
 <head>
 	<title>Health</title>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	<link href="{{ url_for('static', filename='pantry.css') }}" rel="stylesheet" />
 
 </head>
 <body>
 
+{%- macro health() -%}
+{# CODE BELOW #}
 
+
+<div id="healthContainer">
+	Health Test
+
+</div>
+
+{# DO NOT CODE PAST THIS LINE#}
+{%- endmacro %}
+
+{{ health() }}
 
 </body>
 </html>
