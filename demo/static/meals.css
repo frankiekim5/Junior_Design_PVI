@@ -11,3 +11,54 @@ about spacings too much
 
 
 */
+
+#mealsContainer {
+	display: grid;
+	width: 100%;
+	padding: 5vh 0;
+	overflow-x: hidden;
+}
+
+#mealsCollection {
+	width: 100%;
+	max-width: 1500px;
+	height: 100%;
+	margin: 0 auto;
+}
+.mealItemWrap {
+	display: inline-grid;
+	width: 45%;
+	height: 20vh;
+	margin: 0.5rem 2.95%;
+	filter:drop-shadow(-5px 5px 8px #488);
+}
+
+.mealItem:hover {
+	transform: scale(0.96);
+}
+
+.mealItem {
+	height: 100%;
+	width: 100%;
+	-webkit-transition: transform 0.5s ease;
+	transition: all 0.5s;
+	text-align: left;
+	vertical-align: top;
+	background-color: green;
+	background-size: cover;
+	border-radius: 16px;
+}
+
+.mealItemWrap:nth-child(2) {
+	margin-left: 0;
+}
+
+.mealItemDescription {
+	top: 0;
+	border-radius: 16px 16px 0 0;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	padding-top: 5%;
+	padding-left: 8%;
+	background-color: rgba(200, 220, 220, 0.4);
+}

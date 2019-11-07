@@ -3,6 +3,9 @@ import json
 import re
 
 
+MEALS = [{"description": "Chicken Pot Pie", "url":"imgs/chicken_pot_pie.jpg"},
+	{"description": "Pizza", "url":"imgs/pizza.jpg"}]
+
 def page(url, **kwargs):
 	page = (re.findall(r"<body>(.*)</body>", str(render_template(url, **kwargs)), flags=(re.M|re.S))[0])
 	page = Markup(page)
@@ -35,7 +38,7 @@ def pantry():
 
 @app.route('/meals')
 def meals():
-	return render_template("index.html", page=page("meals.html"))
+	return render_template("index.html", page=page("meals.html", mealsList=MEALS))
 
 @app.route('/health')
 def health():
@@ -48,7 +51,7 @@ def settings():
 @app.route('/page', methods=['GET'])
 def get_page():
 	print(request.args.get("page"))
-	return {"page": str(page(request.args.get("page", "home.html"), itemsList=["This item brought to you by MedX", "ahaha"]))}
+	return {"page": str(page(request.args.get("page", "home.html"), mealsList=MEALS, itemsList=["This item brought to you by MedX", "ahaha"]))}
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', threaded=True, debug=True)

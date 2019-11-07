@@ -9,18 +9,32 @@
 <body>
 
 
-{%- macro home(name) -%}
+{%- macro meals(items) -%}
 {# CODE BELOW #}
 
 <div id="mealsContainer">
-	Meals Test
+	<div id="mealsCollection">
+		{% for item in items %}
+		    {{ mealItem(description=item.description, url=item.url) }}
+		{% endfor %}
+	</div>
 </div>
 
 
 {# DO NOT CODE PAST THIS LINE#}
-{%- endmacro %}
+{%- endmacro -%}
 
-{{ home("Evelyn S.") }}
+{%- macro mealItem(description="", url="meals.css") -%}
+<div class="mealItemWrap">
+	<div>
+		<div class="mealItem" style="background-image: url('{{ url_for('static', filename=url) }}');">
+			<div class="mealItemDescription">{{description}}</div>
+		</div>
+	</div>
+</div>
+{%- endmacro -%}
+
+{{ meals(mealsList) }}
 
 
 </body>
