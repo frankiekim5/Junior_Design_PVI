@@ -9,22 +9,20 @@
 </head>
 <body>
 
-{%- macro pantry() -%}
+{%- macro pantry(items) -%}
 {# CODE BELOW #}
 
 
 <div id="pantryContainer">
+	<script src="{{ url_for('static', filename='pantry.js') }}"></script>
+	
+	<p style='font-size:0.8em; margin-left: 0.2em; margin-bottom: 0;'>Your Pantry</p>
+	<div id="pantryTable">
 
-	Test
-	<div id= "tableFirstRow">
-		THIS IS A ROW
-		<div class = "pantryItem">
-			This is an item
-		</div>
+		{% for item in items %}
+		    {{ pantryItem(description=item) }}
+		{% endfor %}
 	</div>
-
-
-	<script src="{{ url_for('static', filename='pantry.js') }}" />
 
 	<span id='pantryTrashWrap'>
 		<button id="pantryTrashButton">
@@ -35,9 +33,16 @@
 </div>
 
 {# DO NOT CODE PAST THIS LINE#}
-{%- endmacro %}
+{%- endmacro -%}
 
-{{ pantry() }}
+{%- macro pantryItem(description="") -%}
+<div class="pantryItem">
+	<div class="pantryItemCheckBox"><input class="pantryCheck" type="checkbox"></div>
+	<div class="pantryItemDescription">{{description}}</div>
+</div>
+{%- endmacro -%}
+
+{{ pantry(itemsList) }}
 
 </body>
 </html>

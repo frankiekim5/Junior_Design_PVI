@@ -40,15 +40,46 @@ about spacings too much
 }
 
 #pantryContainer {
-	width: 90%;
-	padding: 5vh 5%;
-	height: 0px;
+	width: 100%;
+	padding: 5vh 0;
 }
 
-#tableFirstRow{
-	width: 90%;
-	padding: 5vh 5%;
-	height: 0px;
+#pantryTable{
+	display: table;
+	width: 100%;
+	background-color: #FBFDFC;
+	padding: 0;
+	height: relative;
+	box-shadow: 0 0 10px #B8B8C8;
+}
+
+.pantryItem {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	display: flex;
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #8CF;
+	padding: 0.8rem 0.4rem;
+}
+
+.pantryItem:last-child {border-bottom:none;}
+
+.pantryItemCheckBox {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	display: inline-table;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.pantryItemDescription {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	display: inline-table;
+	padding-left: 5px;
+	width: relative;
 }
 
 

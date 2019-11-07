@@ -31,7 +31,7 @@ def home():
 
 @app.route('/pantry')
 def pantry():
-	return render_template("index.html", page=page("pantry.html"))
+	return render_template("index.html", page=page("pantry.html", itemsList=["This item brought to you by MedX", "ahaha"]))
 
 @app.route('/meals')
 def meals():
