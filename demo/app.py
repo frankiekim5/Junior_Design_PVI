@@ -4,7 +4,13 @@ import re
 
 
 MEALS = [{"description": "Chicken Pot Pie", "url":"imgs/chicken_pot_pie.jpg"},
-	{"description": "Pizza", "url":"imgs/pizza.jpg"}]
+	
+	{"description": "Baked Potato", "url":"imgs/baked_potato.jpg"},
+	{"description": "Caesar Salad", "url":"imgs/caesar_salad.jpg"},
+	{"description": "Spaghetti and Meatballs", "url":"imgs/spaghetti_meatballs.jpg"},
+	{"description": "Pizza", "url":"imgs/pizza.jpg"},
+	{"description": "ravioli", "url":"imgs/ravioli.png"},
+	{"description": "Ramen", "url":"imgs/ramen.jpg"}]
 
 def page(url, **kwargs):
 	page = (re.findall(r"<body>(.*)</body>", str(render_template(url, **kwargs)), flags=(re.M|re.S))[0])

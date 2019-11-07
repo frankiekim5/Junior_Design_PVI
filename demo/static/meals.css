@@ -17,27 +17,32 @@ about spacings too much
 	width: 100%;
 	padding: 5vh 0;
 	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 #mealsCollection {
 	width: 100%;
-	max-width: 1500px;
-	height: 100%;
+	max-width: 1200px;
+	height: fit-content;
 	margin: 0 auto;
+	padding-bottom: 20vh;
 }
 .mealItemWrap {
 	display: inline-grid;
 	width: 45%;
-	height: 20vh;
+	min-height: 20vh;
+	height: 20vw;
 	margin: 0.5rem 2.95%;
 	filter:drop-shadow(-5px 5px 8px #488);
 }
 
 .mealItem:hover {
 	transform: scale(0.96);
+	touch-action: manipulation;
 }
 
 .mealItem {
+	touch-action: manipulation;
 	height: 100%;
 	width: 100%;
 	-webkit-transition: transform 0.5s ease;
@@ -49,7 +54,7 @@ about spacings too much
 	border-radius: 16px;
 }
 
-.mealItemWrap:nth-child(2) {
+.mealItemWrap:nth-child(2n) {
 	margin-left: 0;
 }
 
