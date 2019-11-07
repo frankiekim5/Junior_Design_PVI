@@ -43,10 +43,9 @@ about spacings too much
 	width: 100%;
 	max-width: 1200px;
 	padding: 4% 0;
-	height: 92%;
 	margin: 0 auto;
 	overflow-x: hidden;
-	box-shadow: 0 0 10px #8CC;
+	padding-bottom: 10vh;
 }
 
 #pantryTable{

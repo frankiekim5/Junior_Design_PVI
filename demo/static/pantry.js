@@ -40,12 +40,28 @@ $(document).ready(() => {
 	})
 
 	$("#trashButton").click(() => {
+		let res = []
 		$(".pantryItem").map((_, elem) => {
 			let check = $(elem).find('input')
 			if (check.prop('checked')) {
 				elem.remove()
+			} else {
+				let des = $(elem).find('.pantryItemDescription')
+				res.push($(des).text())
 			}
 		})
+		console.log(res)
+		$.ajax({type:"POST",
+			url: $SCRIPT_ROOT + 'pantry',
+			data: {items: JSON.stringify(res)},
+			// data:{data: JSON.stringify({group: group, index: 0, range: range(questions) })},
+			success: go_back
+		})
+		// $.ajax({type:"GET",
+	 //        url: $SCRIPT_ROOT + 'update_items',
+	 //        data: {items: res},
+	 //        success: go_back
+	 //    })
 	})
 
 })

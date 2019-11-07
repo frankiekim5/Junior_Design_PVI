@@ -45,42 +45,32 @@ let populatePage = (data) => {
 $(document).ready(() => {
 
 	document.addEventListener("touchstart", function(){}, true)
-	$("#backButton").click(() => { //TODO: Actually change the screen
-		// console.log("WHAT?")
-		const currentView = viewStack.pop().toLowerCase()
-		$("#removeOptions").css("visibility", "hidden")
-		// alert(viewStack)
-		if (viewStack.length == 0) {
-			$("#title").text("PVI")
-			$(".taskBarButton").removeClass("selectedTBI")
-			$("#backButton").css('visibility', 'hidden')
-			loadPage('home')
-		// } else if (taskbars.includes(currentView)){
-		// 	let last_task = "PVI" //This logic might break
-		// 	// for (let i = viewStack.length - 1; i >= 0; i--) {
-		// 	// 	if (taskbars.includes(viewStack[i])) {
-		// 	// 		last_task = viewStack[i]
-		// 	// 		break
-		// 	// 	}
-		// 	// }
-
-		// 	$('.taskBarButton').removeClass("selectedTBI")
-		// 	$('#' + last_task.toLowerCase() + "Button").addClass("selectedTBI")
-		// 	$("#title").text(last_task)
-		} else {
-			let last_task = "home" //This logic might break
-			for (let i = viewStack.length - 1; i >= 0; i--) {
-				if (taskbars.includes(viewStack[i].toLowerCase())) {
-					last_task = viewStack[i]
-					break
-				}
-			}
-			loadPage(viewStack[viewStack.length - 1])
-			$('.taskBarButton').removeClass("selectedTBI")
-			$('#' + last_task.toLowerCase() + "Button").addClass("selectedTBI")
-			$("#title").text(viewStack[viewStack.length - 1])
-			$("#title").css("visibility", "visible")
-			$("#removeOptions").css("visibility", "hidden")
-		}
-	})
+	$("#backButton").click(() => go_back())
 })
+
+let go_back = () => { //TODO: Actually change the screen
+	// console.log("WHAT?")
+	const currentView = viewStack.pop().toLowerCase()
+	$("#removeOptions").css("visibility", "hidden")
+	// alert(viewStack)
+	if (viewStack.length == 0) {
+		$("#title").text("PVI")
+		$(".taskBarButton").removeClass("selectedTBI")
+		$("#backButton").css('visibility', 'hidden')
+		loadPage('home')
+	} else {
+		let last_task = "home" //This logic might break
+		for (let i = viewStack.length - 1; i >= 0; i--) {
+			if (taskbars.includes(viewStack[i].toLowerCase())) {
+				last_task = viewStack[i]
+				break
+			}
+		}
+		loadPage(viewStack[viewStack.length - 1])
+		$('.taskBarButton').removeClass("selectedTBI")
+		$('#' + last_task.toLowerCase() + "Button").addClass("selectedTBI")
+		$("#title").text(viewStack[viewStack.length - 1])
+		$("#title").css("visibility", "visible")
+		$("#removeOptions").css("visibility", "hidden")
+	}
+}
