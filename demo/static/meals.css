@@ -17,7 +17,7 @@ about spacings too much
 	width: 100%;
 	padding: 5vh 0;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	/*overflow-y: scroll;*/
 }
 
 #mealsCollection {
@@ -26,8 +26,11 @@ about spacings too much
 	height: fit-content;
 	margin: 0 auto;
 	padding-bottom: 20vh;
+	overflow:hidden;
+	touch-action: manipulation;
 }
 .mealItemWrap {
+	touch-action: manipulation;
 	display: inline-grid;
 	width: 45%;
 	min-height: 20vh;
@@ -42,6 +45,7 @@ about spacings too much
 }
 
 .mealItem {
+	outline:none;
 	touch-action: manipulation;
 	height: 100%;
 	width: 100%;
@@ -49,7 +53,7 @@ about spacings too much
 	transition: all 0.5s;
 	text-align: left;
 	vertical-align: top;
-	background-color: green;
+	background-color: aquamarine;
 	background-size: cover;
 	border-radius: 16px;
 }
@@ -59,6 +63,7 @@ about spacings too much
 }
 
 .mealItemDescription {
+	touch-action: manipulation;
 	top: 0;
 	border-radius: 16px 16px 0 0;
 	backdrop-filter: blur(10px);

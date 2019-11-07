@@ -41,8 +41,12 @@ about spacings too much
 
 #pantryContainer {
 	width: 100%;
-	padding: 5vh 0;
+	max-width: 1200px;
+	padding: 4% 0;
+	height: 92%;
+	margin: 0 auto;
 	overflow-x: hidden;
+	box-shadow: 0 0 10px #8CC;
 }
 
 #pantryTable{
