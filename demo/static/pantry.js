@@ -39,7 +39,7 @@ $(document).ready(() => {
 
 	})
 
-	$("#trashButton").click(() => {
+	$("#trashButton").unbind().click(() => {
 		let res = []
 		$(".pantryItem").map((_, elem) => {
 			let check = $(elem).find('input')
@@ -50,7 +50,7 @@ $(document).ready(() => {
 				res.push($(des).text())
 			}
 		})
-		console.log(res)
+		// console.log(res)
 		$.ajax({type:"POST",
 			url: $SCRIPT_ROOT + 'pantry',
 			data: {items: JSON.stringify(res)},

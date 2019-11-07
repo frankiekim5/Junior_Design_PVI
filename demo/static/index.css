@@ -149,7 +149,7 @@
 
 #container {
 	margin: 6vh 0;
-	height: 88vh;
+	height: fit-content;
 	z-index: -1;
 	overflow-x: hidden;
 	/*background-color: green;*/

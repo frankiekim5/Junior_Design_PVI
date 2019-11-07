@@ -17,6 +17,8 @@ about spacings too much
 	width: 100%;
 	padding: 5vh 0;
 	overflow-x: hidden;
+	overflow: hidden;
+	height: fit-content;
 	/*overflow-y: scroll;*/
 }
 

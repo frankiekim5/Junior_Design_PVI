@@ -45,6 +45,7 @@ about spacings too much
 	padding: 4% 0;
 	margin: 0 auto;
 	overflow-x: hidden;
+	overflow: hidden;
 	padding-bottom: 10vh;
 }
 
@@ -55,6 +56,7 @@ about spacings too much
 	padding: 0;
 	height: relative;
 	box-shadow: 0 0 10px #B8B8C8;
+	overflow:hidden;
 }
 
 .pantryItem {

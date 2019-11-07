@@ -26,7 +26,7 @@ MEALS = [{"description": "Chicken Pot Pie", "url":"imgs/chicken_pot_pie.jpg"},
 	{"description": "Caesar Salad", "url":"imgs/caesar_salad.jpg"},
 	{"description": "Spaghetti and Meatballs", "url":"imgs/spaghetti_meatballs.jpg"},
 	{"description": "Pizza", "url":"imgs/pizza.jpg"},
-	{"description": "ravioli", "url":"imgs/ravioli.png"},
+	{"description": "Ravioli", "url":"imgs/ravioli.png"},
 	{"description": "Ramen", "url":"imgs/ramen.jpg"}]
 
 def page(url, **kwargs):
