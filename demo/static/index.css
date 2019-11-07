@@ -151,6 +151,7 @@
 	margin: 6vh 0;
 	height: 88vh;
 	z-index: -1;
+	overflow-x: hidden;
 	/*background-color: green;*/
 }
 
