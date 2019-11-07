@@ -63,7 +63,6 @@ def pantry():
 	if request.method == "POST":
 		items = request.form.get("items", ITEMS)
 		ITEMS = list(json.loads(items))
-		print(ITEMS)
 		return ""
 	else:
 		return render_template("index.html", page=page("pantry.html", itemsList=ITEMS))
@@ -82,7 +81,6 @@ def settings():
 
 @app.route('/page', methods=['GET'])
 def get_page():
-	print(request.args.get("page"))
 	return {"page": str(page(request.args.get("page", "home.html"), mealsList=MEALS, itemsList=ITEMS))}
 
 

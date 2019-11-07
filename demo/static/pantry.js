@@ -6,8 +6,7 @@ $(document).ready(() => {
 	$("#pantryTrashWrap").animate({"bottom": "10vh"},
 		{duration: 600, queue: false})
 
-
-	$("#pantryTrashButton").click(() => {
+	const trash = () => {
 		$('#removeOptions').css('visibility', 'visible')
 		
 		$('#title').css('visibility', 'hidden')
@@ -23,13 +22,76 @@ $(document).ready(() => {
 			{duration: 600, queue: false}, () => {
 				$("#pantryTrashWrap").css("bottom", "10vh")
 		})
-		
-	})
+	}
+
+
+	$("#pantryTrashButton").click(() => trash())
 	$(".pantryItem").click((elem) => {
 		// alert("");
 		let check = $(elem.target).children().children()[0]
 		$(check).prop("checked", !$(check).prop("checked"))
 	})
+
+
+	let down = {'timer': null, 'item': null}
+
+
+	$(".pantryItem").bind('touchstart', () => {
+		// alert("touch start")
+		cancel()
+		if (viewStack[viewStack.length - 1] == 'trash') {
+			alert("trash")
+			return
+		}
+		cancel()
+		down.timer = setTimeout(() => action(), 1400)
+		down.item = $(elem)
+	})
+
+	// $(".pantryItem").mousedown(() => {
+	// 	cancel()
+	// 	if (viewStack[viewStack.length - 1] == 'trash') {
+	// 		return
+	// 	}
+	// 	cancel()
+	// 	down.timer = setTimeout(() => action(), 1400)
+	// 	down.item = $(elem)
+	// })
+
+	$(".pantryItem").bind('touchend', () => {
+		// alert("touch end")
+		cancel()
+	})
+
+	$(".pantryItem").bind('touchmove', () => {
+		// alert("touch end")
+		cancel()
+	})
+
+	$(".pantryItem").bind('touchcancel', () => {
+		
+		cancel()
+	})
+
+	const cancel = () => {
+		if (down.timer) {
+			clearTimeout(down.timer)
+		}
+		down.timer = null
+		down.item = null
+	}
+
+
+	
+
+	const action = () => {
+		$(down.item).prop('checked', 'true')
+		down.timer = null
+		down.item = null
+		trash()
+	}
+
+
 
 	$(".pantryItemDescription").click((elem) => {
 		// alert("");
