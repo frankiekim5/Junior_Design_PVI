@@ -1,14 +1,29 @@
 $(document).ready(() => {
 	let selectAll = true
+
+	$('#pantryTrashWrap').hide();
+	$("#pantryTrashWrap").fadeIn(660)
+	$("#pantryTrashWrap").animate({"bottom": "10vh"},
+		{duration: 600, queue: false})
+
+
 	$("#pantryTrashButton").click(() => {
 		$('#removeOptions').css('visibility', 'visible')
-		$('#pantryTrashButton').css('visibility', 'hidden')
+		
 		$('#title').css('visibility', 'hidden')
 		viewStack.push("trash")
 		$("#backButton").css('visibility', 'visible')
 		$(".pantryItem").map((i, elem) => {
 			$(elem).prepend(`<div class="pantryItemCheckBox"><input class="pantryCheck" type="checkbox"></div>`)
 		})
+		$("#pantryTrashWrap").fadeOut(500, () => {
+			$('#pantryTrashButton').css('visibility', 'hidden')
+		})
+		$("#pantryTrashWrap").animate({"bottom": "0vh"},
+			{duration: 600, queue: false}, () => {
+				$("#pantryTrashWrap").css("bottom", "10vh")
+		})
+		
 	})
 	$(".pantryItem").click((elem) => {
 		// alert("");
@@ -21,8 +36,6 @@ $(document).ready(() => {
 		let check = $(elem.target).parent().children().children()[0]
 		$(check).prop("checked", !$(check).prop("checked"))
 	})
-
-	// prepend(`<div class="pantryItemCheckBox"><input class="pantryCheck" type="checkbox"></div>`)
 
 	$("#selectAll").click(() => {
 		if (selectAll) {
@@ -50,18 +63,12 @@ $(document).ready(() => {
 				res.push($(des).text())
 			}
 		})
-		// console.log(res)
+		
 		$.ajax({type:"POST",
 			url: $SCRIPT_ROOT + 'pantry',
 			data: {items: JSON.stringify(res)},
-			// data:{data: JSON.stringify({group: group, index: 0, range: range(questions) })},
 			success: go_back
 		})
-		// $.ajax({type:"GET",
-	 //        url: $SCRIPT_ROOT + 'update_items',
-	 //        data: {items: res},
-	 //        success: go_back
-	 //    })
 	})
 
 })

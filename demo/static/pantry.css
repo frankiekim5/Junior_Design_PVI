@@ -31,9 +31,10 @@ about spacings too much
 }
 
 #pantryTrashWrap {
+	/*opacity: 0;*/
 	display:block;
 	position: fixed;
-	bottom: 10vh;
+	bottom: 0vh;
 	right: 5vh;	
 	filter: drop-shadow(0 0 15px #A8B8C8);
 	right: min(5vh, 3%);
