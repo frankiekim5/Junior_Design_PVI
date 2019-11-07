@@ -43,10 +43,12 @@ let populatePage = (data) => {
 }
 
 $(document).ready(() => {
+
 	document.addEventListener("touchstart", function(){}, true)
 	$("#backButton").click(() => { //TODO: Actually change the screen
 		// console.log("WHAT?")
 		const currentView = viewStack.pop().toLowerCase()
+		$("#removeOptions").css("visibility", "hidden")
 		// alert(viewStack)
 		if (viewStack.length == 0) {
 			$("#title").text("PVI")

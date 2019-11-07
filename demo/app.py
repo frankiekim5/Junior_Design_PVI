@@ -48,7 +48,7 @@ def settings():
 @app.route('/page', methods=['GET'])
 def get_page():
 	print(request.args.get("page"))
-	return {"page": str(page(request.args.get("page", "home.html")))}
+	return {"page": str(page(request.args.get("page", "home.html"), itemsList=["This item brought to you by MedX", "ahaha"]))}
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', threaded=True, debug=True)
