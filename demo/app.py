@@ -1,5 +1,4 @@
 from flask import Flask, flash, request, redirect, url_for, escape, render_template, Markup
-import requests
 import json
 import re
 
@@ -13,6 +12,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
+	if not request.script_root:
+		request.script_root = url_for('main', _external=True)
 	if request.method == "POST":
 		return render_template("index.html")
 	
@@ -43,6 +44,11 @@ def health():
 @app.route('/settings')
 def settings():
 	return render_template("index.html", page=page("settings.html"))
+
+@app.route('/page', methods=['GET'])
+def get_page():
+	print(request.args.get("page"))
+	return {"page": str(page(request.args.get("page", "home.html")))}
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', threaded=True, debug=True)
