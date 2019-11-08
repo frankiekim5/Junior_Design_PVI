@@ -48,16 +48,6 @@ $(document).ready(() => {
 		down.item = elem.target
 	})
 
-	// $(".pantryItem").mousedown(() => {
-	// 	cancel()
-	// 	if (viewStack[viewStack.length - 1] == 'trash') {
-	// 		return
-	// 	}
-	// 	cancel()
-	// 	down.timer = setTimeout(() => action(), 1400)
-	// 	down.item = $(elem)
-	// })
-
 	$(".pantryItem").bind('touchend', () => {
 		// alert("touch end")
 		cancel()
