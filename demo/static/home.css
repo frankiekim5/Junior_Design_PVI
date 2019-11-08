@@ -24,6 +24,21 @@ about spacings too much
 	color:black;
 }
 
+#homeGroceryGrade {
+	width: 80vw;
+	max-width: 400px;
+	height: 80vw;
+	max-height: 400px;
+}
+
+#homeContainer h2 {
+	margin-bottom: 0;
+}
+
+#homeContainer h3 {
+	margin-bottom: 0;
+}
+
 
 /* GENERICS */
 

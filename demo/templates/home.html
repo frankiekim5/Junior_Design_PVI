@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
 	<title>Home</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	
 	<link href="{{ url_for('static', filename='home.css') }}" rel="stylesheet" />
 </head>
 <body>
@@ -13,9 +14,19 @@
 {# CODE BELOW #}
 
 <div id="homeContainer">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap" rel="stylesheet">
+	<script src="{{ url_for('static', filename='home.js') }}"></script>
 	<h1 id="homeWelcomeTitle">Hello,<br/>{{ name }}!</h1>
-	<h2>User statistics</h2>
-	<p><i>The last time you visited was 11/4/2019. Welcome back!</i></p>
+	
+	<p><i>The last time you visited was 11/7/2019. Welcome back!</i></p>
+	<h2>Your Grocery Basket Grades</h2>
+	<hr/>
+	<h3>Last week:</h3>
+
+	<canvas id="homeGroceryGrade" height="1000" width="1000"/>
+	<svg><!-- 
+	</svg>
+	<h2>This month</h2> -->
 </div>
 
 
