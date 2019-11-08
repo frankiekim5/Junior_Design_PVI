@@ -36,16 +36,16 @@ $(document).ready(() => {
 	let down = {'timer': null, 'item': null}
 
 
-	$(".pantryItem").bind('touchstart', () => {
+	$(".pantryItem").bind('touchstart', (elem) => {
 		// alert("touch start")
 		cancel()
 		if (viewStack[viewStack.length - 1] == 'trash') {
-			alert("trash")
+			// alert("trash")
 			return
 		}
 		cancel()
-		down.timer = setTimeout(() => action(), 1400)
-		down.item = $(elem)
+		down.timer = setTimeout(() => action(), 900)
+		down.item = elem.target
 	})
 
 	// $(".pantryItem").mousedown(() => {
@@ -85,10 +85,19 @@ $(document).ready(() => {
 	
 
 	const action = () => {
-		$(down.item).prop('checked', 'true')
+		// alert()
+		trash()
+		let check = null
+		if ($(down.item).attr('class') == "pantryItemDescription") {
+			check = $(down.item).parent().find("input")
+		} else {
+			check = $(down.item).children().find("input")
+		}
+		
+		$(check).prop('checked', 'true')
 		down.timer = null
 		down.item = null
-		trash()
+		
 	}
 
 
