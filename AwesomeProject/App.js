@@ -18,10 +18,7 @@ import {
 
 import {
   Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
