@@ -41,19 +41,17 @@ if __name__ == "__main__":
 		driver.get(link)
 		
 		for _ in range(1000):
-			time.sleep(0.01)
+			time.sleep(0.005)
 			source = ''.join(driver.page_source)
 			matches = re.findall(r'<div class=\"text-block-primary card-title clamp-3\">([^<]*)</div>', source, flags=re.I | re.M | re.S)
 			if matches:
-				time.sleep(0.3)
 				break
-		matches += re.findall(r'<div class=\"text-block-primary card-title clamp-3\">([^<]*)</div>', source, flags=re.I | re.M | re.S)
 
 		for m in matches: titles.add(m)
 		print(product, len(matches))
 		length += len(matches)
 
-		writeJSON(matches, "../data/publix/%s.json" % product)
+		# writeJSON(matches, "../data/publix/%s.json" % product)
 	
 
 	driver.quit()
