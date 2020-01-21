@@ -4,6 +4,7 @@ from urllib import request
 import json
 import time
 import re
+import os
 
 # JSON read, write functions
 
@@ -30,19 +31,35 @@ if __name__ == "__main__":
 
 	driver.get("https://www.publix.com/search/products/grocery/cd67644e-6180-485f-86f4-0d364937e0e6?page=5000")
 
+	length = 0
+
+	titles = set()
+
 	links = loadJSON("links.json")
 
 	for product, link in links.items():
 		driver.get(link)
 		
-		for _ in range(100):
+		for _ in range(1000):
 			time.sleep(0.01)
 			source = ''.join(driver.page_source)
 			matches = re.findall(r'<div class=\"text-block-primary card-title clamp-3\">([^<]*)</div>', source, flags=re.I | re.M | re.S)
 			if matches:
+				time.sleep(0.3)
 				break
-		
-		writeJSON(matches, "../data/%s.json" % product)
-		
+		matches += re.findall(r'<div class=\"text-block-primary card-title clamp-3\">([^<]*)</div>', source, flags=re.I | re.M | re.S)
+
+		for m in matches: titles.add(m)
+		print(product, len(matches))
+		length += len(matches)
+
+		writeJSON(matches, "../data/publix/%s.json" % product)
+	
 
 	driver.quit()
+
+	writeJSON(sorted(list(titles)), "../data/publix/TOTAL.json")
+	print(length, len(titles))
+
+
+
