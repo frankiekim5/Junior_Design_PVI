@@ -35,5 +35,6 @@
 	"bakery": "https://www.publix.com/search/products/bakery/1cebeb50-903e-4505-9bae-05224866b19d?page=1000",
 	"deli": "https://www.publix.com/search/products/deli/3c9c9bcd-3a34-40f0-a7ef-48e2656467f8?page=1000",
 	"frozen_foods_1": "https://www.publix.com/search/products/frozen-food/dbc4ba45-c3d9-4e30-8d71-e7de13038d3d?sort=titlecopy%20asc,%20popularityrank%20asc&page=1000",
-	"frozen_foods_2": "https://www.publix.com/search/products/frozen-food/dbc4ba45-c3d9-4e30-8d71-e7de13038d3d?sort=titlecopy%20desc,%20popularityrank%20asc&page=1000"
+	"frozen_foods_2": "https://www.publix.com/search/products/frozen-food/dbc4ba45-c3d9-4e30-8d71-e7de13038d3d?sort=titlecopy%20desc,%20popularityrank%20asc&page=1000",
+	"seafoods": "https://www.publix.com/search/products/seafood/cb145c60-289a-4bf0-b39f-26ce5c893db1?page=1000"
 }
