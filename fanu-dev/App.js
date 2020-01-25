@@ -6,6 +6,8 @@ import {
   View,
   Text,
   StatusBar,
+  ImageBackground,
+  Image,
 } from 'react-native';
 import {
   Header,
@@ -23,6 +25,9 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>HomeScreen</Text>
+        <Image
+          source={require('./src/components/img/sleeping-man.jpg')}
+          style={styles.container}></Image>
       </View>
     );
   }
@@ -33,6 +38,9 @@ class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>ProfileScreen</Text>
+        <Image
+          source={require('./src/components/img/market-seller-sale-shop.jpg')}
+          style={styles.container}></Image>
       </View>
     );
   }
@@ -43,6 +51,10 @@ class InventoryScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>InventoryScreen</Text>
+        <Image
+          source={require('./src/components/img/grocery_bag.jpg')}
+          style={styles.container}></Image>
+          
       </View>
     );
   }
@@ -63,11 +75,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
-            <Icon
-              style={[{color: tintColor}]}
-              size={25}
-              name={'home'}
-            />
+            <Icon style={[{color: tintColor}]} size={25} name={'home'} />
           </View>
         ),
       },
