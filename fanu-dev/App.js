@@ -26,8 +26,9 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <Text>HomeScreen</Text>
         <Image
-          source={require('./src/components/img/sleeping-man.jpg')}
-          style={styles.container}></Image>
+          source={require('./src/components/img/market-seller-sale-shop.jpg')}
+          style={styles.container}
+        />
       </View>
     );
   }
@@ -39,8 +40,9 @@ class ProfileScreen extends React.Component {
       <View style={styles.container}>
         <Text>ProfileScreen</Text>
         <Image
-          source={require('./src/components/img/market-seller-sale-shop.jpg')}
-          style={styles.container}></Image>
+          source={require('./src/components/img/sleeping-man.jpg')}
+          style={styles.container}
+        />
       </View>
     );
   }
@@ -53,8 +55,8 @@ class InventoryScreen extends React.Component {
         <Text>InventoryScreen</Text>
         <Image
           source={require('./src/components/img/grocery_bag.jpg')}
-          style={styles.container}></Image>
-          
+          style={styles.container}
+        />
       </View>
     );
   }
