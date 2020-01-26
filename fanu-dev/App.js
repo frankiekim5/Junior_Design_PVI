@@ -16,20 +16,18 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>HomeScreen</Text>
-        <Image
-          source={require('./src/components/img/market-seller-sale-shop.jpg')}
-          style={styles.container}
-        />
-      </View>
+      <ImageBackground
+        style={styles.container}
+        source={require('./src/components/img/market-seller-sale-shop.jpg')}>
+        <Text style={{color: 'white'}}>HomeScreen</Text>
+      </ImageBackground>
     );
   }
 }
@@ -37,13 +35,11 @@ class HomeScreen extends React.Component {
 class ProfileScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>ProfileScreen</Text>
-        <Image
-          source={require('./src/components/img/sleeping-man.jpg')}
-          style={styles.container}
-        />
-      </View>
+      <ImageBackground
+        style={styles.container}
+        source={require('./src/components/img/sleeping-man.jpg')}>
+        <Text style={{color: 'white'}}>ProfileScreen</Text>
+      </ImageBackground>
     );
   }
 }
@@ -51,13 +47,11 @@ class ProfileScreen extends React.Component {
 class InventoryScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>InventoryScreen</Text>
-        <Image
-          source={require('./src/components/img/grocery_bag.jpg')}
-          style={styles.container}
-        />
-      </View>
+      <ImageBackground
+        style={styles.container}
+        source={require('./src/components/img/grocery_bag.jpg')}>
+        <Text style={{color: 'white'}}>InventoryScreen</Text>
+      </ImageBackground>
     );
   }
 }
@@ -77,23 +71,37 @@ const TabNavigator = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
-            <Icon style={[{color: tintColor}]} size={25} name={'home'} />
+            <Icon name="home" size={25} />
           </View>
         ),
       },
     },
     Profile: {
       screen: ProfileScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <Icon name="person" size={25} />
+          </View>
+        ),
+      },
     },
     Inventory: {
       screen: InventoryScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <Icon name="local-grocery-store" size={25} />
+          </View>
+        ),
+      },
     },
   },
   {
     initialRouteName: 'Home',
     activeColor: '#f0edf6',
     inactiveColor: '#3e2465',
-    barStyle: {backgroundColor: '#694fad'},
+    barStyle: {backgroundColor: '#71eeb8'},
   },
 );
 
