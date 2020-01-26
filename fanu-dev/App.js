@@ -19,13 +19,15 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import Pie from 'react-native-pie';
 
 class HomeScreen extends React.Component {
   render() {
     return (
       <ImageBackground
         style={styles.container}
-        source={require('./src/components/img/market-seller-sale-shop.jpg')}>
+        source={require('./src/components/img/market-seller-sale-shop.jpg')}
+        imageStyle={{opacity: 0.5}}>
         <Text style={{color: 'white'}}>HomeScreen</Text>
       </ImageBackground>
     );
@@ -37,7 +39,8 @@ class ProfileScreen extends React.Component {
     return (
       <ImageBackground
         style={styles.container}
-        source={require('./src/components/img/sleeping-man.jpg')}>
+        source={require('./src/components/img/sleeping-man.jpg')}
+        imageStyle={{opacity: 0.5}}>
         <Text style={{color: 'white'}}>ProfileScreen</Text>
       </ImageBackground>
     );
@@ -49,7 +52,8 @@ class InventoryScreen extends React.Component {
     return (
       <ImageBackground
         style={styles.container}
-        source={require('./src/components/img/grocery_bag.jpg')}>
+        source={require('./src/components/img/grocery_bag.jpg')}
+        imageStyle={{opacity: 0.5}}>
         <Text style={{color: 'white'}}>InventoryScreen</Text>
       </ImageBackground>
     );
