@@ -28,7 +28,30 @@ class HomeScreen extends React.Component {
         style={styles.container}
         source={require('./src/components/img/market-seller-sale-shop.jpg')}
         imageStyle={{opacity: 0.5}}>
-        <Text style={{color: 'white'}}>HomeScreen</Text>
+        <Text style={{color: 'white'}}>Grocery Basket Grade</Text>
+        <Pie
+              radius={100}
+              innerRadius={40}
+              sections={[
+                {
+                  percentage: 10,
+                  color: '#C70039',
+                },
+                {
+                  percentage: 20,
+                  color: '#44CD40',
+                },
+                {
+                  percentage: 30,
+                  color: '#404FCD',
+                },
+                {
+                  percentage: 40,
+                  color: '#EBD22F',
+                },
+              ]}
+              strokeCap={'butt'}
+              />
       </ImageBackground>
     );
   }
@@ -37,12 +60,13 @@ class HomeScreen extends React.Component {
 class ProfileScreen extends React.Component {
   render() {
     return (
-      <ImageBackground
+        <ImageBackground
         style={styles.container}
         source={require('./src/components/img/sleeping-man.jpg')}
         imageStyle={{opacity: 0.5}}>
         <Text style={{color: 'white'}}>ProfileScreen</Text>
-      </ImageBackground>
+      </ImageBackground>  
+      
     );
   }
 }

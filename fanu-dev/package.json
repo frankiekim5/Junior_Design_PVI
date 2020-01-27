@@ -13,6 +13,8 @@
     "@react-native-community/art": "^1.1.2",
     "galio-framework": "^0.6.3",
     "react": "16.9.0",
+    "react-d3-components": "^0.9.1",
+    "react-minimal-pie-chart": "^6.0.1",
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-paper": "^3.5.1",
