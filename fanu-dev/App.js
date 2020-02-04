@@ -9,20 +9,20 @@ import {
   // ImageBackground,
   // Image,
 } from 'react-native';
-// import {
+import {
 //   Header,
 //   LearnMoreLinks,
-//   Colors,
+  Colors,
 //   DebugInstructions,
 //   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
+} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import Pie from 'react-native-pie';
 import ProfileScreen from './src/components/screens/ProfileScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
-import HomeScreen from './src/components/screens/InventoryScreen'
+import HomeScreen from './src/components/screens/HomeScreen'
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
