@@ -3,7 +3,7 @@
 data/
 venv/
 *.log
-
+*.db
 
 
 # Byte-compiled / optimized / DLL files
