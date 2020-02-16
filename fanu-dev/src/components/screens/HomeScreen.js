@@ -1,6 +1,7 @@
 import React from 'react'
 import {StyleSheet, ImageBackground, Text} from 'react-native'
 import background from '../../img/market-seller-sale-shop.jpg'
+import FloatingButton from './FloatingButton'
 
 const styles = StyleSheet.create({
     container: {
