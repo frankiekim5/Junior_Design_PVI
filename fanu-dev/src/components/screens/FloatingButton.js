@@ -87,7 +87,7 @@ export default class FloatingButton extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "right",
+    alignItems: "center",
     position: "absolute",
   },
   button: {
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     shadowRadius: 10,
-    shadowColor: '#F02A4B',
+    shadowColor: '#71eeb8',
     shadowOpacity: 0.3,
     shadowOffset: {height: 10},
   },
   menu: {
-    backgroundColor: '#F02A4B',
+    backgroundColor: '#71eeb8',
   },
   secondary: {
     height: 48,
