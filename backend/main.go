@@ -80,75 +80,72 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 		var response LoginResponse
 
+		// Action lets us know if its a login or a register call
 		action := r.FormValue("action")
 
+		// Extract POST arguments
 		fName := r.FormValue("fName")
 		lName := r.FormValue("lName")
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 		email := r.FormValue("email")
-		if action == "login" {
+
+		if action == "login" { // Handle 'login' action
 			fmt.Println("User requested login access")
 			var accessToken string
 			var attempts int
 			var storedPassword string
 			if rows, err := database.Query("SELECT token, attempts, password FROM user WHERE username = ?", username); err == nil {
-				// rows, _ := statement1.Exec(username);
-				// fmt.Println(accessToken, attempts, storedPassword, password)
+
+				// get values from database
 				for rows.Next() {
 					rows.Scan(&accessToken, &attempts, &storedPassword)
 				}
-				fmt.Println(accessToken, attempts, storedPassword, password)
-				if password != storedPassword {
+
+				if password != storedPassword { // password incorrect
 					response = LoginResponse{Token: "", Status:"Login failed"}
 					attempts += 1
-					if attempts >= 3 {
+					if attempts >= 3 && accessToken != "" { // clear token value if too many incorrect attempts
 						statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
 						statement.Exec(username)
-					} else {
+					} else { // update attempts
 						statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
 						statement.Exec(attempts, username)
-						
 					}
 					
 				} else {
+					// set attempts to 0
+					statement, _ := database.Prepare("UPDATE user SET attempts = 0 WHERE username = ?;")
+					statement.Exec(attempts, username)
+
 					response = LoginResponse{Token: accessToken, Status: "Login success"}
 				}
 			} else {
-				// for rows.Next() {
-				// 	rows.Scan(&accessToken, &attempts, &storedPassword)
-				// }
-				// fmt.Println(accessToken, attempts, storedPassword, password)
-				// fmt.Println(rows, err == nil)
 				response = LoginResponse{Token: "", Status:"Login failed"}
 			}
 			fmt.Println(response)
-			// fmt.Println(username, password)
-			// return
-		} else if action == "register" {
+		} else if action == "register" { // handles register calls
 			
 			fmt.Println("User requested register")
-			if (fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "") {
-				// fmt.Println("Illegal POST request")
+			if (fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "") { // invalid parameters
 				response = LoginResponse{Token: "", Status: "Illegal POST request"}
 			}
 			statement, _ :=  database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
+
 			if _, err := statement.Exec(username, email, password, fName, lName); err != nil {
+				// Error creating user - typically same username or email as another user, can make more specific later
 				fmt.Println("Had error creating new user:", err)
-				response = LoginResponse{Token: "", Status: "Had error creating new user:"}
+				response = LoginResponse{Token: "", Status: "Error creating new user"}
 			} else {
-				fmt.Println("Created new user")
-				response = LoginResponse{Token:"test123", Status: "success"}
+				// TODO: Actually return correct token
+
+				// returns access token after successful registration
+				fmt.Println("Created new user", username)
+				response = LoginResponse{Token:"test123", Status: "successfully registered new user"}
 			}
-			// fmt.Println(r.Response)
-			// return sayHello(w, r)
 			// http.Redirect(w, r, "/", 307)
-
-			fmt.Println(response)
-
-			
-			
-			
+		} else { // Got action not 'login' or 'register', not legal
+			response = LoginResponse{Token: "", Status: "Illegal POST request"}
 		}
 		json.NewEncoder(w).Encode(response)
 		
