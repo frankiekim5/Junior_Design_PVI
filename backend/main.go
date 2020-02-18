@@ -72,13 +72,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		http.ServeFile(w, r, "login/index.html")
 	case "POST":
+		response := LoginResponse{Token: "", Status: ""}
+
 		if err := r.ParseForm(); err != nil {
-			fmt.Println("Error while parsing form from POST")
+			response.Status = "Illegal POST call"
+			json.NewEncoder(w).Encode(response)
 			return
 			
 		}
-
-		var response LoginResponse
 
 		// Action lets us know if its a login or a register call
 		action := r.FormValue("action")
@@ -128,7 +129,9 @@ func login(w http.ResponseWriter, r *http.Request) {
 			
 			fmt.Println("User requested register")
 			if (fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "") { // invalid parameters
-				response = LoginResponse{Token: "", Status: "Illegal POST request"}
+				response = LoginResponse{Token: "", Status: "Illegal POST request, illegal arguments"}
+				json.NewEncoder(w).Encode(response)
+				return
 			}
 			token := GenerateToken()
 			statement, _ :=  database.Prepare("INSERT INTO user (username, email, password, fName, lName, token) VALUES (?, ?, ?, ?, ?, ?);")
@@ -136,7 +139,15 @@ func login(w http.ResponseWriter, r *http.Request) {
 			if _, err := statement.Exec(username, email, password, fName, lName, token); err != nil {
 				// Error creating user - typically same username or email as another user, can make more specific later
 				fmt.Println("Had error creating new user:", err)
-				response = LoginResponse{Token: "", Status: "Error creating new user"}
+				if rows, err := database.Query("SELECT * FROM user WHERE username = ?", username); err == nil {
+					if rows.Next() {
+						response = LoginResponse{Token: "", Status: "Error creating new user: username already in use"}
+					} else {
+						response = LoginResponse{Token: "", Status: "Error creating new user: email already in use"}
+					}
+				} else {
+					response = LoginResponse{Token: "", Status: "Error creating new user"}
+				}				
 			} else {
 				// TODO: Actually return correct token
 
