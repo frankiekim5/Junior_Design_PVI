@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Animated,
   TouchableWithoutFeedback,
+  TouchableHighlight
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -19,6 +20,7 @@ export default class FloatingButton extends React.Component {
     }).start();
     this.open = !this.open;
   };
+
   render() {
     const pinStyle = {
       transform: [
@@ -87,16 +89,16 @@ export default class FloatingButton extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    position: "absolute",
+    alignItems: 'center',
+    position: 'absolute',
   },
   button: {
-    position: "absolute",
+    position: 'absolute',
     width: 60,
     height: 60,
     borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowRadius: 10,
     shadowColor: '#71eeb8',
     shadowOpacity: 0.3,

@@ -23,6 +23,7 @@ import Pie from 'react-native-pie';
 import ProfileScreen from './src/components/screens/ProfileScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 import HomeScreen from './src/components/screens/HomeScreen'
+import MealsScreen from './src/components/screens/MealsScreen'
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -52,6 +53,16 @@ const TabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <View>
             <Icon name="local-grocery-store" size={25} />
+          </View>
+        ),
+      },
+    },
+    Meals: {
+      screen: MealsScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <Icon name="FastfoodRounded" size={25} />
           </View>
         ),
       },
