@@ -16,7 +16,7 @@ const MealsScreen = () => {
         style={styles.container}
         source={background}
         imageStyle={{opacity: 0.5}}>
-        <Text style={{color: 'white'}}>HomeScreen</Text>
+        <Text style={{color: 'white'}}>MealsScreen</Text>
     </ImageBackground>
     );
 }

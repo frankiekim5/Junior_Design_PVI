@@ -17,6 +17,7 @@ import {
 //   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import OIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import Pie from 'react-native-pie';
@@ -62,7 +63,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
-            <Icon name="FastfoodRounded" size={25} />
+            <OIcon name="food" size={25} />
           </View>
         ),
       },
