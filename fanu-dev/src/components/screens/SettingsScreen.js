@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 
-const ProfileScreen = () => {
+const SettingsScreen = () => {
     return (
     <ImageBackground
         style={styles.container}
@@ -25,4 +25,4 @@ const ProfileScreen = () => {
 }
 
 
-export default ProfileScreen
+export default SettingsScreen
