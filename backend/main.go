@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strings"
 	"fmt"
+	"encoding/json"
+
 	// "strconv"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -24,11 +26,11 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 	var fName string
 	var lName string
 
-	rows, _ := database.Query("SELECT * FROM user")
+	rows, _ := database.Query("SELECT username, email, password, fName, lName FROM user")
 	for rows.Next() {
 		rows.Scan(&username, &email, &password, &fName, &lName)
-		// fmt.Println(strconv.Itoa(id) + ": " + firstname + " " + lastname)
 		result += "<tr><td>" + username + "</td><td>" + email + "</td><td>" + password + "</td><td>" + fName + "</td><td>" + lName + "</tr>"
+		
 	}
 	message = "<h1>Users</h1><br/><table><tr><th>Username</th><th>Email</th><th>Password</th><th>First Name</th><th>Last Name</th></tr>\n" + result + "</table>";
 
@@ -39,7 +41,7 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 
 func setupDB() {
 	// Hash passwords beforehand, not conducted here yet
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS user (username varchar(255) unique primary key, email varchar(255) unique, password varchar(255), fName varchar(255), lName varchar(255))")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS user (username varchar(255) unique primary key, email varchar(255) unique, password varchar(255), fName varchar(255), lName varchar(255), token char(255), attempts int default 0)")
 	// Unique email, unique username, password, first name, last name for user
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
@@ -59,65 +61,219 @@ func setupDB() {
 	statement3.Exec()
 }
 
+
+
+// LOGIN
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+type LoginResponse struct {
+	Token string	`json:"token"`
+	Status string	`json:"status"`
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
 func login(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		http.ServeFile(w, r, "login/index.html")
 	case "POST":
+		response := LoginResponse{Token: "", Status: ""}
+
 		if err := r.ParseForm(); err != nil {
-			fmt.Println("Error while parsing form from POST")
+			response.Status = "Illegal POST call"
+			json.NewEncoder(w).Encode(response)
 			return
+			
 		}
 
+		// Action lets us know if its a login or a register call
 		action := r.FormValue("action")
 
+		// Extract POST arguments
 		fName := r.FormValue("fName")
 		lName := r.FormValue("lName")
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 		email := r.FormValue("email")
-		if action == "login" {
+
+		if action == "login" { // Handle 'login' action
 			fmt.Println("User requested login access")
-			// if username == nil || password == nil {
-			// 	fmt.Println("Illegal login POST request")
-			// 	return
-			// }
-			// fmt.Println(username, password)
-			return
-		} else if action == "register" {
-			fmt.Println("User requested register")
-			// if (fName == nil || lName == nil || username == nil || password == nil || email == nil) {
-				
-			// }
-			statement, _ :=  database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
-			if _, err := statement.Exec(username, email, password, fName, lName); err != nil {
-				fmt.Println("Had error creating new user")
-				fmt.Println(err)
-				
+			// var accessToken string
+			var attempts int
+			var storedPassword string
+			if rows, err := database.Query("SELECT attempts, password FROM user WHERE username = ?", username); err == nil {
+
+				// get values from database
+				for rows.Next() {
+					rows.Scan(&attempts, &storedPassword)
+				}
+
+				if password != storedPassword { // password incorrect
+					response = LoginResponse{Token: "", Status:"Login failed"}
+					attempts += 1
+					if attempts >= 3{ // clear token value if too many incorrect attempts
+						statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
+						statement.Exec(username)
+					} else { // update attempts
+						statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
+						statement.Exec(attempts, username)
+					}
+					
+				} else { // password is correct
+					// set attempts to 0
+					accessToken := GenerateToken()
+					statement, _ := database.Prepare("UPDATE user SET attempts = 0, token = ? WHERE username = ?;")
+					statement.Exec(accessToken, username)				
+
+					response = LoginResponse{Token: accessToken, Status: "Login success"}
+				}
 			} else {
-				fmt.Println("Created new user")
+				response = LoginResponse{Token: "", Status:"Login failed"}
 			}
-			sayHello(w, r)
+		} else if action == "register" { // handles register calls
+			
+			fmt.Println("User requested register")
+			if (fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "") { // invalid parameters
+				response = LoginResponse{Token: "", Status: "Illegal POST request, illegal arguments"}
+				json.NewEncoder(w).Encode(response)
+				return
+			}
+			token := GenerateToken()
+			statement, _ :=  database.Prepare("INSERT INTO user (username, email, password, fName, lName, token) VALUES (?, ?, ?, ?, ?, ?);")
+
+			if _, err := statement.Exec(username, email, password, fName, lName, token); err != nil {
+				// Error creating user - typically same username or email as another user, can make more specific later
+				fmt.Println("Had error creating new user:", err)
+				if rows, err := database.Query("SELECT * FROM user WHERE username = ?", username); err == nil {
+					if rows.Next() {
+						response = LoginResponse{Token: "", Status: "Error creating new user: username already in use"}
+					} else {
+						response = LoginResponse{Token: "", Status: "Error creating new user: email already in use"}
+					}
+				} else {
+					response = LoginResponse{Token: "", Status: "Error creating new user"}
+				}				
+			} else {
+				// TODO: Actually return correct token
+
+				// returns access token after successful registration
+				fmt.Println("Created new user", username)
+				response = LoginResponse{Token: token, Status: "successfully registered new user"}
+			}
+			// http.Redirect(w, r, "/", 307)
+		} else { // Got action not 'login' or 'register', not legal
+			response = LoginResponse{Token: "", Status: "Illegal POST request"}
 		}
+		json.NewEncoder(w).Encode(response)
 		
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
-func test(w http.ResponseWriter, r *http.Request) {
-	test := "Test"
-	w.Write([]byte(test))
+
+// INVENTORY (Food queries)
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+type Food struct {
+	Name string `json:"name"`
+	Category string `json:"category"`
+	Amount int `json:"amount"`
+	Unit string `json:"unit"`
+	Store string `json:"store"`
 }
+
+type FoodResponse struct {
+	Foods []Food `json:"foods"`
+	Status string `json:"status"`
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+/**
+POST call parameters:
+username: string
+accessToken: string
+**/
+
+func inventory(w http.ResponseWriter, r * http.Request) {
+	response := FoodResponse{Status:"Illegal POST call"}
+	switch r.Method {
+	case "POST":
+		if err := r.ParseForm(); err != nil {
+			response.Status = "Illegal POST call"
+			// json.NewEncoder(w).Encode(response)
+			// return	
+			break
+		}
+
+		username := r.FormValue("username")
+		token := r.FormValue("accessToken")
+
+		var attempts int
+		var actualToken string
+		if rows, err := database.Query("SELECT attempts, token FROM user WHERE username = ?", username); err == nil {
+
+			// get values from database
+			if rows.Next() {
+				rows.Scan(&attempts, &actualToken)
+			} else {
+				response.Status = "Incorrect access token or not logged in"
+				break
+			}
+			
+			if actualToken != token {
+				// statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
+				attempts += 1
+				if attempts >= 3 { // clear token value if too many incorrect attempts
+					statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
+					statement.Exec(username)
+				} else { // update attempts
+					statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
+					statement.Exec(attempts, username)
+				}
+				response.Status = "Incorrect access token or not logged in"
+				break
+			}
+
+			if rows, _ = database.Query("SELECT foodName, category, amount, unit, store from inventory WHERE username = ?", username); rows.Next() {
+				var userFoods []Food = []Food{}
+
+
+				for i := 0; rows.Next(); i+=1 {
+					var foodName string
+					var category string
+					var amount int
+					var unit string
+					var store string
+
+					rows.Scan(&foodName, &category, &amount, &unit, &store)
+					userFoods = append(userFoods, Food{Name: foodName, Category: category, Amount: amount, Unit: unit, Store: store})
+				}
+				response.Foods = userFoods
+			}
+		}
+
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 func main() {
 
+	Init()
 	database, _ = sql.Open("sqlite3", "./pvi.db")	
 
 
 	http.HandleFunc("/", sayHello)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/test", test)
+	http.HandleFunc("/inventory", inventory)
+	// http.HandleFunc("/test", test)
 	// fmt.Println("test")
 	
 	
@@ -141,24 +297,8 @@ func main() {
 	// 	fmt.Println("Error creating new user")
 	// 	fmt.Println(err)
 	// }
-	// rows, _ := database.Query("SELECT * FROM users")
 
-	
-	// var username string
-	// var email string
-	// var password string
-	// var fName string
-	// var lName string
-	// for rows.Next() {
-	// 	rows.Scan(&username, &email, &password, &fName, &lName)
-	// 	// fmt.Println(strconv.Itoa(id) + ": " + firstname + " " + lastname)
-	// 	result += username + " " + email + " " + password + " " + fName + " " + lName + "\n"
-	// }
-
-	
-	// for ;; {
-	//   fmt.Println("test");
-	// }
+	fmt.Println("Listening on 127.0.0.1:8080/")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		panic(err)
 	}
