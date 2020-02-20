@@ -62,10 +62,17 @@ func setupDB() {
 }
 
 
+
+// LOGIN
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
 type LoginResponse struct {
 	Token string	`json:"token"`
 	Status string	`json:"status"`
 }
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 func login(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -164,12 +171,98 @@ func login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
-func test(w http.ResponseWriter, r *http.Request) {
-	test := "Test"
-	w.Write([]byte(test))
+
+// INVENTORY (Food queries)
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+type Food struct {
+	Name string `json:"name"`
+	Category string `json:"category"`
+	Amount int `json:"amount"`
+	Unit string `json:"unit"`
+	Store string `json:"store"`
 }
+
+type FoodResponse struct {
+	Foods []Food `json:"foods"`
+	Status string `json:"status"`
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+/**
+POST call parameters:
+username: string
+accessToken: string
+**/
+
+func inventory(w http.ResponseWriter, r * http.Request) {
+	response := FoodResponse{Status:"Illegal POST call"}
+	switch r.Method {
+	case "POST":
+		if err := r.ParseForm(); err != nil {
+			response.Status = "Illegal POST call"
+			// json.NewEncoder(w).Encode(response)
+			// return	
+			break
+		}
+
+		username := r.FormValue("username")
+		token := r.FormValue("accessToken")
+
+		var attempts int
+		var actualToken string
+		if rows, err := database.Query("SELECT attempts, token FROM user WHERE username = ?", username); err == nil {
+
+			// get values from database
+			if rows.Next() {
+				rows.Scan(&attempts, &actualToken)
+			} else {
+				response.Status = "Incorrect access token or not logged in"
+				break
+			}
+			
+			if actualToken != token {
+				// statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
+				attempts += 1
+				if attempts >= 3 { // clear token value if too many incorrect attempts
+					statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
+					statement.Exec(username)
+				} else { // update attempts
+					statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
+					statement.Exec(attempts, username)
+				}
+				response.Status = "Incorrect access token or not logged in"
+				break
+			}
+
+			if rows, _ = database.Query("SELECT foodName, category, amount, unit, store from inventory WHERE username = ?", username); rows.Next() {
+				var userFoods []Food = []Food{}
+
+
+				for i := 0; rows.Next(); i+=1 {
+					var foodName string
+					var category string
+					var amount int
+					var unit string
+					var store string
+
+					rows.Scan(&foodName, &category, &amount, &unit, &store)
+					userFoods = append(userFoods, Food{Name: foodName, Category: category, Amount: amount, Unit: unit, Store: store})
+				}
+				response.Foods = userFoods
+			}
+		}
+
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 func main() {
 
@@ -179,7 +272,8 @@ func main() {
 
 	http.HandleFunc("/", sayHello)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/test", test)
+	http.HandleFunc("/inventory", inventory)
+	// http.HandleFunc("/test", test)
 	// fmt.Println("test")
 	
 	
