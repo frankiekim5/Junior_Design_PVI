@@ -17,12 +17,14 @@ import {
 //   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import OIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import Pie from 'react-native-pie';
 import ProfileScreen from './src/components/screens/ProfileScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 import HomeScreen from './src/components/screens/HomeScreen'
+import MealsScreen from './src/components/screens/MealsScreen'
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -52,6 +54,16 @@ const TabNavigator = createMaterialBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <View>
             <Icon name="local-grocery-store" size={25} />
+          </View>
+        ),
+      },
+    },
+    Meals: {
+      screen: MealsScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <OIcon name="food" size={25} />
           </View>
         ),
       },

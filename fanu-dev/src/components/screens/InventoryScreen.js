@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import {
   StyleSheet,
-  ImageBackground,
   Text,
   View,
   SectionList,
-  TouchablepWithoutFeedback,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Animated,
 } from 'react-native';
 import background from '../../img/grocery_bag.jpg';
 import FloatingButton from './FloatingButton'
