@@ -19,7 +19,7 @@ const ProfileScreen = () => {
         style={styles.container}
         source={background}
         imageStyle={{opacity: 0.5}}>
-        <Text style={{color: 'white'}}>ProfileScreen</Text>
+        <Text style={{color: 'white'}}>Settings</Text>
     </ImageBackground>
     );
 }
