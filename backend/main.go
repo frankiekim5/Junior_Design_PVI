@@ -1,24 +1,23 @@
-package main;
-
+package main
 
 import (
 	"database/sql"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
-	"fmt"
-	"encoding/json"
-
-	// "strconv"
 
 	_ "github.com/mattn/go-sqlite3"
-);
+)
 
-var database *sql.DB;
+var database *sql.DB
+
+const LOAD_FOOD = true
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	message := r.URL.Path
 	message = strings.TrimPrefix(message, "/")
-	
+
 	var result string
 	var username string
 	var email string
@@ -30,14 +29,25 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		rows.Scan(&username, &email, &password, &fName, &lName)
 		result += "<tr><td>" + username + "</td><td>" + email + "</td><td>" + password + "</td><td>" + fName + "</td><td>" + lName + "</tr>"
-		
+
 	}
-	message = "<h1>Users</h1><br/><table><tr><th>Username</th><th>Email</th><th>Password</th><th>First Name</th><th>Last Name</th></tr>\n" + result + "</table>";
+	message = "<h1>Users</h1><br/><table><tr><th>Username</th><th>Email</th><th>Password</th><th>First Name</th><th>Last Name</th></tr>\n" + result + "</table>"
 
 	// fmt.Println(message)
 	w.Write([]byte(message))
 }
 
+func loadFoods() {
+	foods := LoadFoodsFromJson("publix")
+
+	for i := 0; i < len(foods); i++ {
+		// fmt.Println(foods[i])
+		if statement3, err := database.Prepare("INSERT into food (fullName, store) VALUES (?, ?);"); err == nil {
+			statement3.Exec(foods[i], "publix")
+		}
+
+	}
+}
 
 func setupDB() {
 	// Hash passwords beforehand, not conducted here yet
@@ -46,31 +56,28 @@ func setupDB() {
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
 
-	statement2, _ := database.Prepare("CREATE TABLE IF NOT EXISTS inventory (owner varchar(255) primary key, foodName varchar(255), amount float, unit varchar(255), store varchar(255))")
-	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from 
+	statement2, _ := database.Prepare("CREATE TABLE IF NOT EXISTS inventory (owner varchar(255), foodName varchar(255), amount float, unit varchar(255), store varchar(255), primary key (owner, foodName))")
+	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from
 	// Later, think about checking to see if the item already exists and then update instead of add
 	statement2.Exec()
 	statement2, _ = database.Prepare("INSERT INTO inventory (owner, foodName, amount, unit, store) VALUES (?, ?, ?, ?, ?);")
 	statement2.Exec()
 
 	statement3, _ := database.Prepare("CREATE TABLE IF NOT EXISTS food (store varchar(255), category varchar(255), fullName varchar(255), receiptName varchar(255))")
-	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from 
+	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from
 	// Later, think about checking to see if the item already exists and then update instead of add
 	statement3.Exec()
 	statement3, _ = database.Prepare("INSERT INTO food (store, category, fullName, receiptname) VALUES (?, ?, ?, ?);")
 	statement3.Exec()
+
+	// Load foods
+	if LOAD_FOOD {
+		loadFoods()
+	}
+
 }
-
-
 
 // LOGIN
-// ---------------------------------------------------------------------------------------------------------------------------------------
-
-
-type LoginResponse struct {
-	Token string	`json:"token"`
-	Status string	`json:"status"`
-}
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -85,7 +92,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			response.Status = "Illegal POST call"
 			json.NewEncoder(w).Encode(response)
 			return
-			
+
 		}
 
 		// Action lets us know if its a login or a register call
@@ -111,37 +118,37 @@ func login(w http.ResponseWriter, r *http.Request) {
 				}
 
 				if password != storedPassword { // password incorrect
-					response = LoginResponse{Token: "", Status:"Login failed"}
-					attempts += 1
-					if attempts >= 3{ // clear token value if too many incorrect attempts
+					response = LoginResponse{Token: "", Status: "Login failed"}
+					attempts++
+					if attempts >= 3 { // clear token value if too many incorrect attempts
 						statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
 						statement.Exec(username)
 					} else { // update attempts
 						statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
 						statement.Exec(attempts, username)
 					}
-					
+
 				} else { // password is correct
 					// set attempts to 0
 					accessToken := GenerateToken()
 					statement, _ := database.Prepare("UPDATE user SET attempts = 0, token = ? WHERE username = ?;")
-					statement.Exec(accessToken, username)				
+					statement.Exec(accessToken, username)
 
 					response = LoginResponse{Token: accessToken, Status: "Login success"}
 				}
 			} else {
-				response = LoginResponse{Token: "", Status:"Login failed"}
+				response = LoginResponse{Token: "", Status: "Login failed"}
 			}
 		} else if action == "register" { // handles register calls
-			
+
 			fmt.Println("User requested register")
-			if (fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "") { // invalid parameters
+			if fName == "" || lName == "" || len(username) < 6 || len(password) < 6 || email == "" { // invalid parameters
 				response = LoginResponse{Token: "", Status: "Illegal POST request, illegal arguments"}
 				json.NewEncoder(w).Encode(response)
 				return
 			}
 			token := GenerateToken()
-			statement, _ :=  database.Prepare("INSERT INTO user (username, email, password, fName, lName, token) VALUES (?, ?, ?, ?, ?, ?);")
+			statement, _ := database.Prepare("INSERT INTO user (username, email, password, fName, lName, token) VALUES (?, ?, ?, ?, ?, ?);")
 
 			if _, err := statement.Exec(username, email, password, fName, lName, token); err != nil {
 				// Error creating user - typically same username or email as another user, can make more specific later
@@ -154,7 +161,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 					}
 				} else {
 					response = LoginResponse{Token: "", Status: "Error creating new user"}
-				}				
+				}
 			} else {
 				// TODO: Actually return correct token
 
@@ -167,30 +174,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 			response = LoginResponse{Token: "", Status: "Illegal POST request"}
 		}
 		json.NewEncoder(w).Encode(response)
-		
+
 	}
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
-
-
 // INVENTORY (Food queries)
 // ---------------------------------------------------------------------------------------------------------------------------------------
-
-type Food struct {
-	Name string `json:"name"`
-	Category string `json:"category"`
-	Amount int `json:"amount"`
-	Unit string `json:"unit"`
-	Store string `json:"store"`
-}
-
-type FoodResponse struct {
-	Foods []Food `json:"foods"`
-	Status string `json:"status"`
-}
-
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 /**
@@ -199,14 +190,17 @@ username: string
 accessToken: string
 **/
 
-func inventory(w http.ResponseWriter, r * http.Request) {
-	response := FoodResponse{Status:"Illegal POST call"}
+func inventory(w http.ResponseWriter, r *http.Request) {
+	response := FoodResponse{Status: "Illegal POST call"}
 	switch r.Method {
+	case "GET":
+		// TODO: Make and edit test POST call page for testing Inventory calls
+		http.ServeFile(w, r, "inventory/index.html")
 	case "POST":
 		if err := r.ParseForm(); err != nil {
 			response.Status = "Illegal POST call"
 			// json.NewEncoder(w).Encode(response)
-			// return	
+			// return
 			break
 		}
 
@@ -224,10 +218,10 @@ func inventory(w http.ResponseWriter, r * http.Request) {
 				response.Status = "Incorrect access token or not logged in"
 				break
 			}
-			
-			if actualToken != token {
+
+			if actualToken != token && token != "" {
 				// statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
-				attempts += 1
+				attempts++
 				if attempts >= 3 { // clear token value if too many incorrect attempts
 					statement, _ := database.Prepare("UPDATE user SET attempts = 0, token=\"\" WHERE username = ?;")
 					statement.Exec(username)
@@ -239,21 +233,24 @@ func inventory(w http.ResponseWriter, r * http.Request) {
 				break
 			}
 
-			if rows, _ = database.Query("SELECT foodName, category, amount, unit, store from inventory WHERE username = ?", username); rows.Next() {
-				var userFoods []Food = []Food{}
+			if rows, err = database.Query("SELECT foodName, amount, unit, store from inventory WHERE owner = ?", username); err == nil {
+				var userFoods []InventoryItem = []InventoryItem{}
+				// fmt.Println("FOOD")
+				// fmt.Println(rows)
 
-
-				for i := 0; rows.Next(); i+=1 {
+				for rows.Next() {
 					var foodName string
-					var category string
-					var amount int
+					var amount float32
 					var unit string
 					var store string
 
-					rows.Scan(&foodName, &category, &amount, &unit, &store)
-					userFoods = append(userFoods, Food{Name: foodName, Category: category, Amount: amount, Unit: unit, Store: store})
+					rows.Scan(&foodName, &amount, &unit, &store)
+					userFoods = append(userFoods, InventoryItem{Name: foodName, Amount: amount, Unit: unit, Store: store})
 				}
 				response.Foods = userFoods
+				response.Status = "Valid Response"
+			} else {
+				fmt.Println(err)
 			}
 		}
 
@@ -267,19 +264,16 @@ func inventory(w http.ResponseWriter, r * http.Request) {
 func main() {
 
 	Init()
-	database, _ = sql.Open("sqlite3", "./pvi.db")	
-
+	database, _ = sql.Open("sqlite3", "./pvi.db")
 
 	http.HandleFunc("/", sayHello)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/inventory", inventory)
 	// http.HandleFunc("/test", test)
 	// fmt.Println("test")
-	
-	
 
 	setupDB()
-	
+
 	// statement2, err2 := database.Prepare("INSERT INTO inventory (owner, foodName, amount, unit, store) VALUES (?, ?, ?, ?, ?);")
 	// statement2.Exec()
 	// if (err != nil) {
@@ -291,7 +285,7 @@ func main() {
 	// 	fmt.Println("Invalid query inventory")
 	// 	panic(err)
 	// }
-	
+
 	// _, err = statement.Exec("testUser", "testUser@gmail.com", "password123", "Test", "User")
 	// if (err != nil) {
 	// 	fmt.Println("Error creating new user")
