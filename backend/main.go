@@ -12,7 +12,7 @@ import (
 
 var database *sql.DB
 
-const LOAD_FOOD = false
+const LOAD_FOOD = true
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	message := r.URL.Path
