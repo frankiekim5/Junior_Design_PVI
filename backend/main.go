@@ -231,7 +231,7 @@ func inventory(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			if actualToken != token && token != "" {
+			if actualToken != token || token != "" {
 				// statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
 				attempts++
 				if attempts >= 3 { // clear token value if too many incorrect attempts
