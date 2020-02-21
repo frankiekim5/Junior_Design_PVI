@@ -21,7 +21,7 @@ import OIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import Pie from 'react-native-pie';
-import ProfileScreen from './src/components/screens/ProfileScreen'
+import SettingsScreen from './src/components/screens/SettingsScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 import HomeScreen from './src/components/screens/HomeScreen'
 import MealsScreen from './src/components/screens/MealsScreen'
@@ -38,12 +38,12 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
-    Profile: {
-      screen: ProfileScreen,
+    Settings: {
+      screen: SettingsScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
-            <Icon name="person" size={25} />
+            <Icon name="settings" size={25} />
           </View>
         ),
       },
