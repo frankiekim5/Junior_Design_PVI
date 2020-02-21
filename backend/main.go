@@ -231,7 +231,9 @@ func inventory(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			if actualToken != token || token != "" {
+			fmt.Println(actualToken, token)
+
+			if actualToken != token || token == "" {
 				// statement, _ := database.Prepare("UPDATE user SET attempts = ? WHERE username = ?;")
 				attempts++
 				if attempts >= 3 { // clear token value if too many incorrect attempts
@@ -243,7 +245,9 @@ func inventory(w http.ResponseWriter, r *http.Request) {
 				}
 				response.Status = "Incorrect access token or not logged in"
 				break
+
 			}
+			fmt.Println("test")
 
 			if rows, err = database.Query("SELECT foodName, amount, unit, store from inventory WHERE owner = ?", username); err == nil {
 				var userFoods []InventoryItem = []InventoryItem{}
