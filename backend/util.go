@@ -61,7 +61,4 @@ func LoadFoodsFromJson(storeName string) (foods []string) {
 	}
 
 	return
-
-	// INSERT (foodName, store) into food VALUES (?, ?)
-	// .Exec(foodName, storeName)
 }

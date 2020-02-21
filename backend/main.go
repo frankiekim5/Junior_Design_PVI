@@ -12,7 +12,7 @@ import (
 
 var database *sql.DB
 
-const LOAD_FOOD = true
+const LOAD_FOOD = false
 
 func sayHello(w http.ResponseWriter, r *http.Request) {
 	message := r.URL.Path
@@ -54,21 +54,33 @@ func setupDB() {
 	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS user (username varchar(255) unique primary key, email varchar(255) unique, password varchar(255), fName varchar(255), lName varchar(255), token char(255), attempts int default 0)")
 	// Unique email, unique username, password, first name, last name for user
 	statement.Exec()
-	statement, _ = database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
+	// statement, _ = database.Prepare("INSERT INTO user (username, email, password, fName, lName) VALUES (?, ?, ?, ?, ?);")
 
-	statement2, _ := database.Prepare("CREATE TABLE IF NOT EXISTS inventory (owner varchar(255), foodName varchar(255), amount float, unit varchar(255), store varchar(255), primary key (owner, foodName))")
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS food (store varchar(255), category varchar(255), fullName varchar(255), receiptName varchar(255), primary key (store, fullName))")
 	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from
 	// Later, think about checking to see if the item already exists and then update instead of add
-	statement2.Exec()
-	statement2, _ = database.Prepare("INSERT INTO inventory (owner, foodName, amount, unit, store) VALUES (?, ?, ?, ?, ?);")
-	statement2.Exec()
+	statement.Exec()
 
-	statement3, _ := database.Prepare("CREATE TABLE IF NOT EXISTS food (store varchar(255), category varchar(255), fullName varchar(255), receiptName varchar(255))")
+	statement, _ = database.Prepare("INSERT INTO food (store, category, fullName, receiptname) VALUES (?, ?, ?, ?);")
+	statement.Exec()
+
+	// foreign key(store) references food(fullName), foreign key(foodName) references fullName)
+	statement, _ = database.Prepare(`CREATE TABLE IF NOT EXISTS inventory
+										(owner varchar(255),
+										foodName varchar(255),
+										amount float,
+										unit varchar(255),
+										store varchar(255),
+										primary key (owner, foodName),
+										constraint store_name foreign key(store) references food(fullName),
+										constraint food_name foreign key(foodName) references food(fullName),
+										foreign key(owner) references user(username)
+									)`)
 	// Owner: key of who owns the inventory, foodName: food's box name, amount: amount of the food in a float, unit: unit to be used with amount to keep accurate count of food in string, store: string of what store the food is from
 	// Later, think about checking to see if the item already exists and then update instead of add
-	statement3.Exec()
-	statement3, _ = database.Prepare("INSERT INTO food (store, category, fullName, receiptname) VALUES (?, ?, ?, ?);")
-	statement3.Exec()
+	statement.Exec()
+	statement, _ = database.Prepare("INSERT INTO inventory (owner, foodName, amount, unit, store) VALUES (?, ?, ?, ?, ?);")
+	statement.Exec()
 
 	// Load foods
 	if LOAD_FOOD {
