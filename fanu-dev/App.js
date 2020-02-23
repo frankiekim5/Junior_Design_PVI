@@ -38,16 +38,6 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: {
-        tabBarIcon: ({tintColor}) => (
-          <View>
-            <Icon name="settings" size={25} />
-          </View>
-        ),
-      },
-    },
     Inventory: {
       screen: InventoryScreen,
       navigationOptions: {
@@ -68,7 +58,18 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <Icon name="settings" size={25} />
+          </View>
+        ),
+      },
+    }
   },
+  
   {
     initialRouteName: 'Home',
     activeColor: '#f0edf6',
