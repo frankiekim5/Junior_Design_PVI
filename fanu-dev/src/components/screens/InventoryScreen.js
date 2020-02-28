@@ -10,20 +10,20 @@ import FloatingButton from './FloatingButton'
 
 const DATA = [
   {
-    title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
+    title: 'Protein',
+    data: ['Eggs', 'Chicken', 'Salmon', 'Tofu'],
   },
   {
-    title: 'Sides',
-    data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+    title: 'Grains',
+    data: ['Pasta', 'Bread', 'Tortillas'],
   },
   {
-    title: 'Drinks',
-    data: ['Water', 'Coke', 'Beer'],
+    title: 'Fruits',
+    data: ['Bananas', 'Watermelon', 'Grapes'],
   },
   {
-    title: 'Desserts',
-    data: ['Cheese Cake', 'Ice Cream'],
+    title: 'Vegetables',
+    data: ['Spinach', 'Broccoli'],
   },
 ];
 
