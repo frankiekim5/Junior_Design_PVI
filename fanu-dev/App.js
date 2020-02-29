@@ -25,6 +25,7 @@ import SettingsScreen from './src/components/screens/SettingsScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 import HomeScreen from './src/components/screens/HomeScreen'
 import MealsScreen from './src/components/screens/MealsScreen'
+import ServerScreen from './src/components/screens/Server'
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -67,9 +68,18 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
       },
-    }
+    },
+    Server: {
+      screen: ServerScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View>
+            <Icon name="developer-mode" size={25} />
+          </View>
+        ),
+      },
+    },
   },
-  
   {
     initialRouteName: 'Home',
     activeColor: '#f0edf6',

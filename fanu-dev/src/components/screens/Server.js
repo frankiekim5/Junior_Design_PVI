@@ -1,23 +1,80 @@
 import React, {Component} from 'react';
-import { AppRegistry, SectionList, StyleSheet, Text, View, Alert, Platform } from 'react-native'
-const apiGetAllFoods = '127.0.0.1:8080/inventory'
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, TouchableOpacity } from 'react-native'
+import { RawButton } from 'react-native-gesture-handler';
 
-async function getFoodsFromServer() {
-    try {
-      let response = await fetch(apiGetAllFoods, {
-        method: 'POST' ,
-        headers: {
-          'Accept':'application/json',
-          'Content-Type':'application/json'
-          'username':
-          'token':
-        },
-        body: JSON.stringify(params)
-      });
-      let responseJson = await response.json()
-      return responseJson.food;
-    } catch(error) {
-        console.error('Error is: ${error}')
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+var raw = "'username':'kmont3',\n'accessToken':\"FTUvovkWVzI82BkTaQbISKU1J3OeSE2h1rrN3MbvOxZmH8C4qMrBtWVgwloNumdtIozzkpYIZJoozEllNVXNJcDid3ymCHjIKR7iKNCeTcrdxbxesTXGrZ0dRfuGHL6xLzQWJNJUz7vroirTpvzRciNGazRkzYs4s4ovG9ptj9e7GJhoTTYbbCQsJJYqrjVpANAQ3nkr1BA8Rek8Z0tuWvsa0jZEAqAVrsIdzD9hSsz6GwNQcNjTSwuKQF4xtTr FTUvovkWVzI82BkTaQbISKU1J3OeSE2h1rrN3MbvOxZmH8C4qMrBtWVgwloNumdtIozzkpYIZJoozEllNVXNJcDid3ymCHjIKR7iKNCeTcrdxbxesTXGrZ0dRfuGHL6xLzQWJNJUz7vroirTpvzRciNGazRkzYs4s4ovG9ptj9e7GJhoTTYbbCQsJJYqrjVpANAQ3nkr1BA8Rek8Z0tuWvsa0jZEAqAVrsIdzD9hSsz6GwNQcNjTSwuKQF4xtTr\"\n";
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+export default class Server extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoading:true,
+      dataSource: []
     }
+  }
+
+  
+
+  componentDidMount() {
+    fetch('http://localhost:8080/inventory', requestOptions).then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+        isLoading:false,
+        dataSource: responseJson
+      })
+    })
+  }
+
+  _renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => alert(item.body)}>
+      <View style={styles.item}>
+        <Text>{item.title}</Text>
+      </View>
+    </TouchableOpacity>
+    
+  );
+
+  render() {
+    if(this.state.isLoading) {
+      return(
+        <View style= {styles.container}>
+          <ActivityIndicator size="large" animating />
+        </View>
+      )
+    }else {
+      return (
+        <View style= {styles.container}>
+          <FlatList
+            data = {this.state.dataSource}
+            renderItem={this._renderItem}
+            keyExtractor={(item, index) => index}
+          />
+        </View>
+      )
+    }
+    
+  }
+
+  
 }
-export {getFoodsFromServer};
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  item: {
+    padding: 5,
+    borderBottomWidth: 1,
+    borderBottomColor:'#eee'
+  }
+});
