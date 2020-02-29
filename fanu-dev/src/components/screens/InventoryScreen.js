@@ -7,6 +7,9 @@ import {
 } from 'react-native';
 import background from '../../img/grocery_bag.jpg';
 import FloatingButton from './FloatingButton'
+//import getFoodsFromServer from './Server'
+
+
 
 const DATA = [
   {
@@ -26,6 +29,8 @@ const DATA = [
     data: ['Spinach', 'Broccoli'],
   },
 ];
+
+
 
 const Item = ({title}) => {
   return (
@@ -57,11 +62,13 @@ const InventoryScreen = () => {
   return (
     <View>
       <SectionList
-        sections={DATA}
+        sections={data}
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => <Item title={item} />}
         renderSectionHeader={({section: {title}}) => (
           <Text style={styles.header}>{title}</Text>
+          
+          
         )}
       />
       <FloatingButton style={{ bottom:50, left:325 }}/>

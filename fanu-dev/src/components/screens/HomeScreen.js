@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
     },
 })
 
+
+
+
+
+
+
 const HomeScreen = () => {
     return (
     <ImageBackground

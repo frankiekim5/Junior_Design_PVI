@@ -9,13 +9,17 @@ async function getFoodsFromServer() {
         headers: {
           'Accept':'application/json',
           'Content-Type':'application/json'
-          'username':
-          'token':
         },
-        body: JSON.stringify(params)
+        body: JSON.stringify({
+          'username':'FirstLast',
+          'accessToken':"w1hwVSEOh8j2zCUqnTWbOkvFRzDSnVMKNeQsx3Yqa06QcT8tJ8cPtdeBybW4mhpmEcTy0zhBgKc3BSrCgYnc7vu1mYcXefZpFWY0xfTUw9YbdhxGbmdeCpRrClnBlNqaXYnTTq6SInAmTO2G60kVclm2quuyTxTmCOJrHyUKNzwjQeOv6cVAs8bOPstSux3GQc9JEWYzktisfNBkCv1KQbYzC0kyvEXN0FONRIx5shVA3BfWCA2Kq35kY6jIaAG"
+
+        })
+        //body: JSON.stringify(params)
       });
-      let responseJson = await response.json()
-      return responseJson.food;
+      let responseJson = response.json()
+      console.log('hello', 'Response.json: ${responseJson}')
+      return responseJson.foods;
     } catch(error) {
         console.error('Error is: ${error}')
     }
