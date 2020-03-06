@@ -22,7 +22,7 @@ import FloatingButton from './FloatingButton'
 //   };
 
 
-class RegistrationScreen extends Component {
+class LoginScreen extends Component {
     state = {
         email: '',
         password: ''
@@ -41,26 +41,12 @@ class RegistrationScreen extends Component {
            <View style = {styles.container}>
                <TextInput style = {styles.input}
                  underlineColorAndroid = "transparent"
-                 placeholder = "First Name"
+                 placeholder = "Username"
                  placeholderTextColor = "#9a73ef"
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
                  onChangeText = {this.handlePassword}/>
                  
-
-<TextInput style = {styles.input}
-                 underlineColorAndroid = "transparent"
-                 placeholder = "Last Name"
-                 placeholderTextColor = "#9a73ef"
-                 autoCapitalize = "none"
-                 onChangeText = {this.handlePassword}/> 
-
-              <TextInput style = {styles.input}
-                 underlineColorAndroid = "transparent"
-                 placeholder = "Email"
-                 placeholderTextColor = "#9a73ef"
-                 autoCapitalize = "none"
-                 onChangeText = {this.handleEmail}/>
               
               <TextInput style = {styles.input}
                  underlineColorAndroid = "transparent"
@@ -69,12 +55,6 @@ class RegistrationScreen extends Component {
                  autoCapitalize = "none"
                  onChangeText = {this.handlePassword}/>
 
-                <TextInput style = {styles.input}
-                 underlineColorAndroid = "transparent"
-                 placeholder = "Confirm Password"
-                 placeholderTextColor = "#9a73ef"
-                 autoCapitalize = "none"
-                 onChangeText = {this.handlePassword}/> 
 
 
                 
@@ -92,7 +72,7 @@ class RegistrationScreen extends Component {
 }
 
   
-  export default RegistrationScreen;
+  export default LoginScreen;
 
   const styles = StyleSheet.create({
     container: {
