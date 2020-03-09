@@ -204,6 +204,7 @@ accessToken: string
 
 func inventory(w http.ResponseWriter, r *http.Request) {
 	response := FoodResponse{Status: "Illegal POST call"}
+	fmt.Println("GOT CALL")
 	switch r.Method {
 	case "GET":
 		// TODO: Make and edit test POST call page for testing Inventory calls
@@ -218,6 +219,8 @@ func inventory(w http.ResponseWriter, r *http.Request) {
 
 		username := r.FormValue("username")
 		token := r.FormValue("accessToken")
+
+		fmt.Println(token, "TEST")
 
 		var attempts int
 		var actualToken string
