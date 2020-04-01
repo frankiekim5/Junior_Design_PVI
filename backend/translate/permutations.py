@@ -47,7 +47,16 @@ def tokenize_words(name, times=1, words_in_token=2):
 
 	PEPPERIDGE FARM MILANO COOKIES --> PF MILANO COOKIES
 	"""
-	pass
+	words = name.split(" ")
+	if words_in_token > len(words):
+		words_in_token = len(words)
+	for i in range(times):
+		randnum = random.randint(0, len(words) - words_in_token)
+		removed = ""
+		for index in range(words_in_token):
+			removed = removed + words.pop(randnum)[0]
+		words.insert(randnum, removed)
+	return " ".join(words)
 
 def delete_chars(name, times=1, min_word_len=2):
 	"""
