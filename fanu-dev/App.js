@@ -40,7 +40,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       },
     },
     Inventory: {
-      screen: InventoryScreen,
+      screen: ServerScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
@@ -69,7 +69,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
-    Server: {
+    /* Server: {
       screen: ServerScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
@@ -78,7 +78,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
       },
-    },
+    }, */
   },
   {
     initialRouteName: 'Home',

@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { RawButton } from 'react-native-gesture-handler';
+import fetch from "node-fetch"
+import foodPic from '../../img/food.jpg';
 
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-var raw = "'username':'kmont3',\n'accessToken':\"FTUvovkWVzI82BkTaQbISKU1J3OeSE2h1rrN3MbvOxZmH8C4qMrBtWVgwloNumdtIozzkpYIZJoozEllNVXNJcDid3ymCHjIKR7iKNCeTcrdxbxesTXGrZ0dRfuGHL6xLzQWJNJUz7vroirTpvzRciNGazRkzYs4s4ovG9ptj9e7GJhoTTYbbCQsJJYqrjVpANAQ3nkr1BA8Rek8Z0tuWvsa0jZEAqAVrsIdzD9hSsz6GwNQcNjTSwuKQF4xtTr FTUvovkWVzI82BkTaQbISKU1J3OeSE2h1rrN3MbvOxZmH8C4qMrBtWVgwloNumdtIozzkpYIZJoozEllNVXNJcDid3ymCHjIKR7iKNCeTcrdxbxesTXGrZ0dRfuGHL6xLzQWJNJUz7vroirTpvzRciNGazRkzYs4s4ovG9ptj9e7GJhoTTYbbCQsJJYqrjVpANAQ3nkr1BA8Rek8Z0tuWvsa0jZEAqAVrsIdzD9hSsz6GwNQcNjTSwuKQF4xtTr\"\n";
+
+
 var requestOptions = {
   method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  },
+  body: "username=kmont3&accessToken=KOwe0useac9anwOKei93UPFtscOPS0EvU5uQCIDE6x1IB1WPPn0zpP6UC8ShHJwqwldaOM18knJAS9ZIelKihH3PTPuvmc7txBUFgCoVpXEk7GpdKW7MQGGjjZHyMQmhQoQyH022uJdR5PpkaYlKmT40SZhuAf0SrIAnNWUFosPfQbcrrYMFhDdGo9Bg67Ibc3EEnMsOE8m3C4sMNEEmeEdJmD0MHK0rkXSfiMJSTxQWYPl5dOrjU8CunULSnq0"
 };
 
 export default class Server extends Component {
@@ -24,23 +35,44 @@ export default class Server extends Component {
   
 
   componentDidMount() {
-    fetch('http://localhost:8080/inventory', requestOptions).then((response) => response.json())
+    fetch('http://192.168.1.74:5000/inventory', requestOptions)
+    .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
         isLoading:false,
         dataSource: responseJson
       })
-    })
+    }).catch((error) => {
+      console.error(error)
+    });
   }
 
   _renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => alert(item.body)}>
-      <View style={styles.item}>
-        <Text>{item.title}</Text>
+    <TouchableOpacity onPress={() => alert(item.amount)}>
+      <View style={{flex: 1, flexDirection: 'row', marginBottom: 3}}>
+        <Image style={{width: 80, height: 80, margin: 5}} source={foodPic} />
+        <View style = {{flex:1, justifyContent:'center', marginLeft:5}}>
+          <Text style={{fontSize:35, color:'#3969d2', marginBottom:3}}>
+            {item.name}
+          </Text>
+          <Text style={{fontSize:16, color:'black'}}>
+            Amount: {item.amount}
+          </Text>
+          <Text style={{color:'black'}}>
+            Store: {item.store}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
-    
   );
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{height:1,width:'100%',backgroundColor:'black'}}>
+      </View>
+    )
+  }
 
   render() {
     if(this.state.isLoading) {
@@ -50,12 +82,14 @@ export default class Server extends Component {
         </View>
       )
     }else {
+      //var myArray = this.state.dataSource.foods;
       return (
         <View style= {styles.container}>
-          <FlatList
-            data = {this.state.dataSource}
-            renderItem={this._renderItem}
-            keyExtractor={(item, index) => index}
+          <Text>Status: {this.state.dataSource.status}</Text>
+          <FlatList data={this.state.dataSource.foods}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={this._renderItem}
+          ItemSeparatorComponent={this.renderSeparator}
           />
         </View>
       )
@@ -69,8 +103,7 @@ export default class Server extends Component {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor:'#F5FCFF',
   },
   item: {
     padding: 5,
