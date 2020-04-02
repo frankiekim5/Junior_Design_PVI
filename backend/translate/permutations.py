@@ -66,7 +66,7 @@ def delete_chars(name, times=1, min_word_len=2):
 	"""
 	words = name.split(" ")
 	for i in range(times):
-		randnum = random.randint(0, len(words) - 1)
+		randnum = random.randint(1, len(words) - 1)
 		if len(words[randnum]) >= min_word_len:
 			character = random.randint(0, len(words[randnum]) - 1)
 			words[randnum] = words[randnum][0:character:] + words[randnum][character+1::]
@@ -104,7 +104,8 @@ def main():
 	print(concatenate_words(name))
 	print(tokenize_words(name))
 	print(delete_chars(name))
-	print(delete_word(name))
+	print(swap_words(tokenize_words(delete_chars(name))))
+
 
 
 
