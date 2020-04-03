@@ -2,7 +2,8 @@ import requests
 import json
 import argparse
 
-host = "127.0.0.1:5000"
+host = "127.0.0.1:8080"
+ 
 
 def post(page):
 	url = "http://%s/%s" % (host, page)

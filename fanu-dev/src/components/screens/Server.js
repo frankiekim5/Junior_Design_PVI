@@ -23,6 +23,11 @@ var requestOptions = {
   body: "username=kmont3&accessToken=KOwe0useac9anwOKei93UPFtscOPS0EvU5uQCIDE6x1IB1WPPn0zpP6UC8ShHJwqwldaOM18knJAS9ZIelKihH3PTPuvmc7txBUFgCoVpXEk7GpdKW7MQGGjjZHyMQmhQoQyH022uJdR5PpkaYlKmT40SZhuAf0SrIAnNWUFosPfQbcrrYMFhDdGo9Bg67Ibc3EEnMsOE8m3C4sMNEEmeEdJmD0MHK0rkXSfiMJSTxQWYPl5dOrjU8CunULSnq0"
 };
 
+// fetch("127.0.0.1:8080/inventory", requestOptions)
+//   .then(response => response.text())
+//   .then(result => console.log(result))
+//   .catch(error => console.log('error', error));
+
 export default class Server extends Component {
   constructor() {
     super();
@@ -35,7 +40,7 @@ export default class Server extends Component {
   
 
   componentDidMount() {
-    fetch('http://192.168.1.74:5000/inventory', requestOptions)
+    fetch('http://192.168.1.74:8080/inventory', requestOptions)
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({

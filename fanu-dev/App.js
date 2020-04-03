@@ -26,6 +26,7 @@ import InventoryScreen from './src/components/screens/InventoryScreen'
 import HomeScreen from './src/components/screens/HomeScreen'
 import MealsScreen from './src/components/screens/MealsScreen'
 import ServerScreen from './src/components/screens/Server'
+import RegistrationScreen from './src/components/screens/RegistrationScreen';
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -69,7 +70,19 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
-    /* Server: {
+    // Registration: {
+    //   screen: RegistrationScreen,
+    //   navigationOptions: {
+    //     tabBarIcon: ({tintColor}) => (
+    //       <View>
+    //         <Icon name="settings" size={25} />
+    //       </View>
+    //     ),
+    //   },
+      
+      
+    // }
+    Server: {
       screen: ServerScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
