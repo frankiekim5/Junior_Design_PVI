@@ -25,30 +25,48 @@ import SettingsScreen from './src/components/screens/SettingsScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 //import HomeScreen from './src/components/screens/HomeScreen'
 import MealsScreen from './src/components/screens/MealsScreen'
-import ServerScreen from './src/components/screens/Server'
+import ServerScreen from './src/components/screens/ServerScreen'
 import LoginScreen from './src/components/screens/LoginScreen'
 import RegistrationScreen from './src/components/screens/RegistrationScreen';
+
 
 import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+
+
+
+
 //<Stack.Screen name="Home" component={HomeScreen} />
 
 const Stack = createStackNavigator();
+
+// function Tabs() {
+//   return (
+
+//   )
+// }
+
+
 
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 export default App;
+
+
 
 
 // const TabNavigator = createMaterialBottomTabNavigator(
