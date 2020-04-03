@@ -8,55 +8,49 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { RawButton } from 'react-native-gesture-handler';
-import fetch from "node-fetch"
+import fetch from 'node-fetch';
 import foodPic from '../../img/food.jpg';
-
-
+import FloatingButton from './FloatingButton';
 
 var requestOptions = {
   method: 'POST',
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
   },
-  body: "username=kmont3&accessToken=KOwe0useac9anwOKei93UPFtscOPS0EvU5uQCIDE6x1IB1WPPn0zpP6UC8ShHJwqwldaOM18knJAS9ZIelKihH3PTPuvmc7txBUFgCoVpXEk7GpdKW7MQGGjjZHyMQmhQoQyH022uJdR5PpkaYlKmT40SZhuAf0SrIAnNWUFosPfQbcrrYMFhDdGo9Bg67Ibc3EEnMsOE8m3C4sMNEEmeEdJmD0MHK0rkXSfiMJSTxQWYPl5dOrjU8CunULSnq0"
+  /**FIXME: username and accessToken*/
+  body: "username=kmont3&accessToken=fsOZqbnQzWfRmzXOtLwX9jTyu7G1QMOtgIEYXze8MqThrwrw62boaNM96GuqnwqeLJdW64gENVp1vKN83S4Gp5SnG3WflpS9MbBsTaAsKOZMXbRlwiGjtypaqHt4MLoJD9UwZtd2urTQObIQy7gKFFAgQN7huwG2AoOlFSCyBWcMF33GLbUeD4RyVTBzzFDnuScGAMwv9LLEwYvp5tJGNRXgsVWE1cOCQwZJrQCnAYyG2wClqWYU11R3KCWDtPL"
 };
-
-// fetch("127.0.0.1:8080/inventory", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
 
 export default class Server extends Component {
   constructor() {
     super();
     this.state = {
-      isLoading:true,
-      dataSource: []
-    }
+      isLoading: true,
+      dataSource: [],
+    };
   }
-
-  
 
   componentDidMount() {
+    /** FIXME: IP address for server*/
     fetch('http://192.168.1.74:8080/inventory', requestOptions)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        isLoading:false,
-        dataSource: responseJson
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        });
       })
-    }).catch((error) => {
-      console.error(error)
-    });
+      .catch(error => {
+        console.error(error);
+      });
   }
 
-  _renderItem = ({ item }) => (
+  _renderItem = ({item}) => (
     <TouchableOpacity onPress={() => alert(item.amount)}>
       <View style={{flex: 1, flexDirection: 'row', marginBottom: 3}}>
         <Image style={{width: 80, height: 80, margin: 5}} source={foodPic} />
-        <View style = {{flex:1, justifyContent:'center', marginLeft:5}}>
+        <View style={{flex: 1, justifyContent: 'center', marginLeft: 5}}>
           <Text style={{fontSize:35, color:'#3969d2', marginBottom:3}}>
             {item.name}
           </Text>
@@ -80,22 +74,24 @@ export default class Server extends Component {
   }
 
   render() {
-    if(this.state.isLoading) {
-      return(
+    if (this.state.isLoading) {
+      return (
         <View style= {styles.container}>
           <ActivityIndicator size="large" animating />
         </View>
-      )
-    }else {
+      );
+    } else {
       //var myArray = this.state.dataSource.foods;
       return (
-        <View style= {styles.container}>
+        <View style={styles.container}>
           <Text>Status: {this.state.dataSource.status}</Text>
-          <FlatList data={this.state.dataSource.foods}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={this._renderItem}
-          ItemSeparatorComponent={this.renderSeparator}
+          <FlatList
+            data={this.state.dataSource.foods}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={this._renderItem}
+            ItemSeparatorComponent={this.renderSeparator}
           />
+          <FloatingButton style={{bottom: 80, left: 325}} />
         </View>
       )
     }

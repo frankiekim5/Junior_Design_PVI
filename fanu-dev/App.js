@@ -79,10 +79,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
     //       </View>
     //     ),
     //   },
-      
-      
     // }
-    Server: {
+    /* Server: {
       screen: ServerScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
