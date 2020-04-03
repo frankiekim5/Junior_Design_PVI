@@ -33,18 +33,18 @@ class LoginScreen extends Component {
   //   super();
 
     state = {
-        email: '',
+        username: '',
         password: ''
      }
-     handleEmail = (text) => {
-        this.setState({ email: text })
+     handleUsername = (text) => {
+        this.setState({ username: text })
      }
      handlePassword = (text) => {
         this.setState({ password: text })
      }
-     login = (email, pass) => {
-        var raw = "action=login&username=FirstLast&password=123456"
-        //var raw = "action=login&username=" + username
+     login = (user, pass) => {
+        //var raw = "action=login&username=FirstLast&password=123456"
+        var raw = "action=login&username=" + this.state.username + "&password=" + this.state.password
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
@@ -56,7 +56,7 @@ class LoginScreen extends Component {
         fetch('http://192.168.1.20:5000/login', requestOptions).then((response) => response.json())
         //.then((responseJson) => {(console.log(responseJson))
       
-        alert('email: ' + email + ' password: ' + pass)
+        alert('email: ' + user + ' password: ' + pass)
      }
     
    
@@ -71,7 +71,7 @@ class LoginScreen extends Component {
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
                  
-                 onChangeText = {this.handleEmail}/>
+                 onChangeText = {this.handleUsername}/>
                  
               
               <TextInput style = {styles.input}
@@ -89,7 +89,7 @@ class LoginScreen extends Component {
                <TouchableOpacity
                  style = {styles.submitButton}
                  onPress = {
-                    () => this.login(this.state.email, this.state.password)
+                    () => this.login(this.state.username, this.state.password)
                  }>
                  <Text style = {styles.submitButtonText}> Submit </Text>
               </TouchableOpacity>

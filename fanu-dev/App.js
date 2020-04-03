@@ -25,7 +25,6 @@ import SettingsScreen from './src/components/screens/SettingsScreen'
 import InventoryScreen from './src/components/screens/InventoryScreen'
 //import HomeScreen from './src/components/screens/HomeScreen'
 import MealsScreen from './src/components/screens/MealsScreen'
-import ServerScreen from './src/components/screens/ServerScreen'
 import LoginScreen from './src/components/screens/LoginScreen'
 import RegistrationScreen from './src/components/screens/RegistrationScreen';
 
