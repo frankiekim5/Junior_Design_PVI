@@ -59,6 +59,8 @@ class RegistrationScreen extends Component {
             dataSource: responseJson
          })
          })
+         
+
         alert('email: ' + email + ' password: ' + pass)
       }
     

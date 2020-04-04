@@ -47,16 +47,31 @@ class LoginScreen extends Component {
         //will have to put fetch call here .. 
         //handle with submit button
         fetch('http://192.168.1.20:5000/login', requestOptions)
-        .then((responseJson) => {
-          this.setState({
-            dataSource: responseJson
-          })
+        .then((response) => {
+          return response.json();
         })
-        //.then((response) => response.json())
-        //.then((responseJson) => {(console.log(responseJson))
+        .then((data) => {
+          console.log("hello", data.status);
+          this.setState({
+            dataSource :data
+          })
+        });
 
-      
-        alert('email: ' + user + ' password: ' + pass)
+        //console.log('again', this.state.dataSource.status)
+        //console.log(typeof this.state.dataSource.status)
+        //var responseStatus = this.state.dataSource.status
+        var success = "Login success"
+        
+        
+         if ("Login success" == this.state.dataSource.status) {
+            alert('Login successful!')
+         }
+         else {
+           //either call spurriously failed, OR unsuccesful login (wrong user/password)
+           alert('Status: ' + this.state.dataSource.status)
+         }
+
+        
      }
     
    
