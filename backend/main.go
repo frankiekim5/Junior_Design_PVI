@@ -101,7 +101,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		response := LoginResponse{Token: "", Status: ""}
 
 		if err := r.ParseForm(); err != nil {
-			response.Status = "Illegal POST call"
+			response.Status = "Illegal POST call hello"
 			json.NewEncoder(w).Encode(response)
 			return
 
@@ -116,6 +116,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 		email := r.FormValue("email")
+		fmt.Println(password)
+		fmt.Println(username)
 
 		if action == "login" { // Handle 'login' action
 			fmt.Println("User requested login access")
@@ -183,7 +185,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			}
 			// http.Redirect(w, r, "/", 307)
 		} else { // Got action not 'login' or 'register', not legal
-			response = LoginResponse{Token: "", Status: "Illegal POST request"}
+			response = LoginResponse{Token: "", Status: "Illegal POST request, bye"}
 		}
 		json.NewEncoder(w).Encode(response)
 
@@ -308,8 +310,8 @@ func main() {
 	// 	fmt.Println(err)
 	// }
 
-	fmt.Println("Listening on 127.0.0.1:8080/")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	fmt.Println("Listening on 127.0.0.1:5000/")
+	if err := http.ListenAndServe(":5000", nil); err != nil {
 		panic(err)
 	}
 }

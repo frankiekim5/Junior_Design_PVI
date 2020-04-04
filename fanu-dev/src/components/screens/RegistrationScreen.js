@@ -10,6 +10,10 @@ import {
 
 import FloatingButton from './FloatingButton'
 
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+myHeaders.append("Accept", "application/json");
+
 
 class RegistrationScreen extends Component {
     state = {
@@ -25,16 +29,39 @@ class RegistrationScreen extends Component {
      handlePassword = (text) => {
         this.setState({ password: text })
      }
-     login = (email, pass) => {
-        alert('email: ' + email + ' password: ' + pass)
-     }
      handleFirstName = (text) => {
-        this.setState({firstName: text})
-     }
-
-     handleLastName = (text) => {
-      this.setState({lastName: text})
+      this.setState({firstName: text})
    }
+
+      handleLastName = (text) => {
+       this.setState({lastName: text})
+   }
+
+   handleUsername = (text) => {
+      this.setState({username: text})
+  }
+
+
+     register = (email, pass) => {
+         var raw = "action=register&username=" + this.state.username + "&password=" + this.state.password + "&fName=" 
+            + this.state.firstName+ "&lName=" + this.state.lastName + "&email=" + email
+         var requestOptions = {
+         method: 'POST',
+         headers: myHeaders,
+         body: raw,
+        
+         };
+         //will have to put fetch call here .. 
+         //handle with submit button
+         fetch('http://192.168.1.20:5000/login', requestOptions)
+         .then((responseJson) => {
+         this.setState({
+            dataSource: responseJson
+         })
+         })
+        alert('email: ' + email + ' password: ' + pass)
+      }
+    
 
      render() {
         return (
@@ -63,6 +90,14 @@ class RegistrationScreen extends Component {
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
                  onChangeText = {this.handleEmail}/>
+
+               <TextInput style = {styles.input}
+                 underlineColorAndroid = "transparent"
+                 placeholder = "Username"
+                 placeholderTextColor = "#000000"
+                 autoCapitalize = "none"
+                 underlineColorAndroid = "#808080"
+                 onChangeText = {this.handleUsername}/>
               
               <TextInput style = {styles.input}
                  underlineColorAndroid = "transparent"
@@ -86,7 +121,7 @@ class RegistrationScreen extends Component {
               <TouchableOpacity
                  style = {styles.submitButton}
                  onPress = {
-                    () => this.login(this.state.email, this.state.password)
+                    () => this.register(this.state.email, this.state.password)
                  }>
                  <Text style = {styles.submitButtonText}> Submit </Text>
               </TouchableOpacity>
