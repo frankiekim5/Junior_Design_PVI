@@ -89,13 +89,14 @@ class LoginScreen extends Component {
                  onChangeText = {this.handleUsername}/>
                  
               
-              <TextInput style = {styles.input}
+              <TextInput secureTextEntry={true} style = {styles.input}
                  underlineColorAndroid = "transparent"
                  placeholder = "Password"
                  placeholderTextColor = "#000000"
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
                  onChangeText = {this.handlePassword}/>
+                 
 
 
 

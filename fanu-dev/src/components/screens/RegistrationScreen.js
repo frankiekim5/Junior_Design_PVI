@@ -101,7 +101,7 @@ class RegistrationScreen extends Component {
                  underlineColorAndroid = "#808080"
                  onChangeText = {this.handleUsername}/>
               
-              <TextInput style = {styles.input}
+              <TextInput secureTextEntry={true} style = {styles.input}
                  underlineColorAndroid = "transparent"
                  placeholder = "Password"
                  placeholderTextColor = "#000000"
@@ -109,7 +109,7 @@ class RegistrationScreen extends Component {
                  underlineColorAndroid = "#808080"
                  onChangeText = {this.handlePassword}/>
 
-                <TextInput style = {styles.input}
+                <TextInput secureTextEntry={true} style = {styles.input}
                  underlineColorAndroid = "transparent"
                  placeholder = "Confirm Password"
                  placeholderTextColor = "#000000"
