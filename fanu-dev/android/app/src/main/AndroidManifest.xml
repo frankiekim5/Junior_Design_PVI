@@ -1,10 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sampleproject">
+=======
+  package="com.sampleproject"
+    xmlns:tools="http://schemas.android.com/tools">
+>>>>>>> login
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+<<<<<<< HEAD
 
         android:name=".MainApplication"
         android:label="@string/app_name"
@@ -15,6 +21,15 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+=======
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+        android:usesCleartextTraffic="true" tools:targetApi="28"
+      android:theme="@style/AppTheme">
+>>>>>>> login
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
