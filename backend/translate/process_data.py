@@ -1,5 +1,6 @@
 import numpy as numpy
 import json
+import re
 
 def writeJSON(jsonObject, filepath, access='w', indent=4):
 	try:
@@ -17,10 +18,13 @@ def loadJSON(filepath, access='r'):
 	return False
 
 def clean(name):
-	legal = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890 "
+	name = re.sub(r"[^A-Z0-9]", " ", name.upper())
+	name = re.sub(r"\s+", " ", name.upper())
 
-	name = name.upper()
-	return "".join(list(filter(lambda a: a in legal, name)))
+	return name
+
+	# name = name.upper()
+	# return "".join(list(filter(lambda a: a in legal, name)))
 
 
 if __name__ == '__main__':
