@@ -137,7 +137,7 @@ class LAE:
         for i in range(self.depth):
             decoder_layer = (LSTM(self.hidden_size, return_sequences=True))(decoder_layer)
         
-        decoder_layer = (LSTM(self.hidden_size, return_sequences=True))(decoder_layer)
+        # decoder_layer = (LSTM(self.hidden_size, return_sequences=True))(decoder_layer)
 
         decoder_dense = Dense(self.input_size, activation="softmax")
         # decoder_activation = Activation("softmax")
@@ -182,7 +182,7 @@ class LAE:
         # print(encoder_h.shape, encoder_c.shape)
 
         initial = np.zeros((1, 1, self.input_size))
-        initial[0][0][1] = 1
+        initial[0][0][0] = 1
         result = np.array(initial)
         for i in range(len(name_token) + 5):
             result = self.decoder.predict([result, encoder_h, encoder_c])

@@ -41,9 +41,9 @@ def concatenate_words(name, times=1):
 		
 		
 
-def tokenize_words(name, times=1, words_in_token=2):
+def initialize_words(name, times=1, words_in_token=2):
 	"""
-	"Tokenize" a set of words.
+	"initialize" a set of words.
 
 	PEPPERIDGE FARM MILANO COOKIES --> PF MILANO COOKIES
 	"""
@@ -66,7 +66,7 @@ def delete_chars(name, times=1, min_word_len=2):
 	"""
 	words = name.split(" ")
 	for i in range(times):
-		randnum = random.randint(1, len(words) - 1)
+		randnum = random.randint(0, len(words) - 1)
 		if len(words[randnum]) >= min_word_len:
 			character = random.randint(0, len(words[randnum]) - 1)
 			words[randnum] = words[randnum][0:character:] + words[randnum][character+1::]
