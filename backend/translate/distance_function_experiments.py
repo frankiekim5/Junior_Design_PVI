@@ -111,4 +111,5 @@ if __name__ == "__main__":
 
         # TESTING LCS SCORES
         lcs_scores = test_score(r_name, filtered_names, lcs_score, t_name=t_name)
+        lcs_scores = test_score(r_name, names, lcs_score, t_name=t_name)
         # print(t_name)

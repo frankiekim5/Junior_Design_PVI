@@ -28,14 +28,14 @@ def word_generator(filepath, batch_size=32):
         yield (names, names), target_names
         del names, target_names
 
-def delete_char_generator(filepath, batch_size=32):
+def delete_char_generator(filepath, batch_size=32, deletions=2, min_deletions=2):
     with open(filepath, 'r') as f: full_names = json.load(f)
     word_names = list(set(reduce(lambda a, b: a + b, map(lambda s: s.strip().split(), full_names))))
 
     while True:
         batch_names = np.random.choice(word_names, batch_size)
 
-        receipt_names = list(map(lambda name: permute.delete_chars(name, times=np.random.randint(0, 2)), batch_names))
+        receipt_names = list(map(lambda name: permute.delete_chars(name, times=np.random.randint(min_deletions, deletions)), batch_names))
 
         receipt_names = list(map(tokenize, receipt_names))
         target_names = list(map(tokenize, batch_names))
@@ -99,6 +99,28 @@ def normal_generator(filepath, batch_size=32):
 		yield (names, names), target_names
 		# yield names, teacher_names, target_names
 		del names, target_names
+
+def delete_full_generator(filepath, batch_size=32, deletions=4, min_deletions=2):
+    with open(filepath, 'r') as f: full_names = json.load(f)
+
+    while True:
+        batch_names = np.random.choice(full_names, batch_size)
+        receipt_names = list(map(lambda name: permute.delete_chars(name, times=np.random.randint(min_deletions, deletions)), batch_names))
+
+        receipt_names = list(map(tokenize, receipt_names))
+        target_names = list(map(tokenize, batch_names))
+
+        batch_length = max(map(len, batch_names))
+
+        END_TOKEN = np.zeros((1, 1, 39))
+        END_TOKEN[0, 0, 1] = 1
+        names = np.array(pad_sequences(receipt_names, padding="post", maxlen=batch_length+1, value=END_TOKEN))
+
+        teacher_names = np.array(pad_sequences(target_names, padding="post", maxlen=batch_length+1, value=END_TOKEN))
+        target_names = np.array(np.insert(teacher_names[:,1:, :], teacher_names.shape[1]-1, 0, axis=1))
+
+        yield (names, teacher_names), target_names
+        del names, teacher_names, target_names
 
 def _normal_generator(filepath, batch_size=32):
 	with open(filepath, 'r') as f: full_names = json.load(f)

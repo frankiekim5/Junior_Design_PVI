@@ -15,9 +15,9 @@ if __name__ == "__main__":
 
     training_gen = word_generator(names_file, batch_size=128)
 
-    nn.fit(training_gen, steps_per_epoch=100, epochs=100)
+    nn.fit(training_gen, steps_per_epoch=100, epochs=50)
 
-    training_gen = delete_char_generator(names_file, batch_size=128)
+    training_gen = delete_char_generator(names_file, batch_size=128, deletions=4)
 
     nn.decoder.trainable = False
 
