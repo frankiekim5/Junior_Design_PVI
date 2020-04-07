@@ -46,7 +46,8 @@ class LoginScreen extends Component {
         };
         //will have to put fetch call here .. 
         //handle with submit button
-        fetch('http://192.168.1.20:5000/login', requestOptions)
+        //FIXME: change IP
+        fetch('http://192.168.1.74:5000/login', requestOptions)
         .then((response) => {
           return response.json();
         })
