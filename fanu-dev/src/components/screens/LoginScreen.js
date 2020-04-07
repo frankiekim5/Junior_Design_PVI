@@ -25,11 +25,22 @@ class LoginScreen extends Component {
   // constructor(){
   //   super();
 
-    state = {
-        username: '',
-        password: '',
-        dataSource:[]
-     }
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+      dataSource: [],
+      username: '',
+      password: '',
+    };
+  }
+
+    // state = {
+    //     username: '',
+    //     password: '',
+    //     dataSource:[],
+    //     isLoading = true
+    //  }
      handleUsername = (text) => {
         this.setState({ username: text })
      }
@@ -54,23 +65,20 @@ class LoginScreen extends Component {
         .then((data) => {
           console.log("hello", data.status);
           this.setState({
-            dataSource :data
-          })
+            dataSource : data,
+            isLoading: false
+          });
+          if (this.state.dataSource.status == "Login success") {
+            alert('Login successful!')
+          }
+          else {
+            alert('Login failed. Please try again.')
+          }
         });
 
-        //console.log('again', this.state.dataSource.status)
-        //console.log(typeof this.state.dataSource.status)
-        //var responseStatus = this.state.dataSource.status
+      
         var success = "Login success"
-        
-        
-         if ("Login success" == this.state.dataSource.status) {
-            alert('Login successful!')
-         }
-         else {
-           //either call spurriously failed, OR unsuccesful login (wrong user/password)
-           alert('Status: ' + this.state.dataSource.status)
-         }
+
 
         
      }
