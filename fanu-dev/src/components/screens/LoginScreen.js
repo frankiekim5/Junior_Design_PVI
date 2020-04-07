@@ -42,11 +42,11 @@ class LoginScreen extends Component {
           method: 'POST',
           headers: myHeaders,
           body: raw,
-          
+
         };
-        //will have to put fetch call here .. 
+        //will have to put fetch call here ..
         //handle with submit button
-        fetch('http://192.168.1.20:5000/login', requestOptions)
+        fetch('192.168.1.82:5000/login', requestOptions)
         .then((response) => {
           return response.json();
         })
@@ -61,20 +61,21 @@ class LoginScreen extends Component {
         //console.log(typeof this.state.dataSource.status)
         //var responseStatus = this.state.dataSource.status
         var success = "Login success"
-        
-        
+
+
          if ("Login success" == this.state.dataSource.status) {
             alert('Login successful!')
+
          }
          else {
            //either call spurriously failed, OR unsuccesful login (wrong user/password)
            alert('Status: ' + this.state.dataSource.status)
          }
 
-        
+
      }
-    
-   
+
+
 
      render() {
         return (
@@ -85,10 +86,10 @@ class LoginScreen extends Component {
                  placeholderTextColor = "#000000"
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
-                 
+
                  onChangeText = {this.handleUsername}/>
-                 
-              
+
+
               <TextInput style = {styles.input}
                  underlineColorAndroid = "transparent"
                  placeholder = "Password"
@@ -99,14 +100,16 @@ class LoginScreen extends Component {
 
 
 
-                
-              
+
+
                <TouchableOpacity
                  style = {styles.submitButton}
-                 onPress = {
-                    () => this.login(this.state.username, this.state.password)
+                 onPress={()=>
+                    this.props.navigation.navigate('HomeScreen')
+                    // this.login(this.state.username, this.state.password)
+
                  }>
-                   
+
                  <Text style = {styles.submitButtonText}> Submit </Text>
               </TouchableOpacity>
 
@@ -117,11 +120,11 @@ class LoginScreen extends Component {
            </View>
         )
       }
-    }   
-              
-    
+    }
+
+
 export default LoginScreen;
-  
+
 
 
 const styles = StyleSheet.create({
