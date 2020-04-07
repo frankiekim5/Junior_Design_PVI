@@ -10,6 +10,7 @@ import {
 
 
 import FloatingButton from './FloatingButton'
+import TabScreen from './TabScreen'
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
@@ -53,12 +54,12 @@ class LoginScreen extends Component {
           method: 'POST',
           headers: myHeaders,
           body: raw,
-          
+
         };
-        //will have to put fetch call here .. 
+        //will have to put fetch call here ..
         //handle with submit button
-        //FIXME: change IP
-        fetch('http://192.168.1.74:5000/login', requestOptions)
+        //FIXME: change IP and/or port
+        fetch('192.168.1.74:5000/login', requestOptions)
         .then((response) => {
           return response.json();
         })
@@ -80,10 +81,19 @@ class LoginScreen extends Component {
         var success = "Login success"
 
 
-        
+         if ("Login success" == this.state.dataSource.status) {
+            alert('Login successful!')
+
+         }
+         else {
+           //either call spurriously failed, OR unsuccesful login (wrong user/password)
+           alert('Status: ' + this.state.dataSource.status)
+         }
+
+
      }
-    
-   
+
+
 
      render() {
         return (
@@ -94,11 +104,11 @@ class LoginScreen extends Component {
                  placeholderTextColor = "#000000"
                  autoCapitalize = "none"
                  underlineColorAndroid = "#808080"
-                 
+
                  onChangeText = {this.handleUsername}/>
-                 
-              
-              <TextInput secureTextEntry={true} style = {styles.input}
+
+
+              <TextInput style = {styles.input}
                  underlineColorAndroid = "transparent"
                  placeholder = "Password"
                  placeholderTextColor = "#000000"
@@ -109,14 +119,16 @@ class LoginScreen extends Component {
 
 
 
-                
-              
+
+
                <TouchableOpacity
                  style = {styles.submitButton}
-                 onPress = {
-                    () => this.login(this.state.username, this.state.password)
+                 onPress={()=>
+                    this.props.navigation.navigate('TabScreen')
+                    // this.login(this.state.username, this.state.password)
+
                  }>
-                   
+
                  <Text style = {styles.submitButtonText}> Submit </Text>
               </TouchableOpacity>
 
@@ -127,11 +139,11 @@ class LoginScreen extends Component {
            </View>
         )
       }
-    }   
-              
-    
+    }
+
+
 export default LoginScreen;
-  
+
 
 
 const styles = StyleSheet.create({

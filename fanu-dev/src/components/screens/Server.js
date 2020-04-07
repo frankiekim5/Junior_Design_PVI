@@ -32,8 +32,8 @@ export default class Server extends Component {
   }
 
   componentDidMount() {
-    /** FIXME: IP address for server*/
-    fetch('http://192.168.1.74:8080/inventory', requestOptions)
+    /** FIXME: check IP address and port for server*/
+    fetch('http://192.168.1.74:5000/inventory', requestOptions)
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
@@ -91,7 +91,7 @@ export default class Server extends Component {
             renderItem={this._renderItem}
             ItemSeparatorComponent={this.renderSeparator}
           />
-          <FloatingButton style={{bottom: 80, left: 325}} />
+          <FloatingButton style={{marginBottom: 80, marginLeft: 300}} />
         </View>
       )
     }
