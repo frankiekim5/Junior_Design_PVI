@@ -110,18 +110,6 @@ export default App;
 //         ),
 //       },
 //     },
-//     // Registration: {
-//     //   screen: RegistrationScreen,
-//     //   navigationOptions: {
-//     //     tabBarIcon: ({tintColor}) => (
-//     //       <View>
-//     //         <Icon name="settings" size={25} />
-//     //       </View>
-//     //     ),
-//     //   },
-      
-      
-//     // }
 //     Server: {
 //       screen: ServerScreen,
 //       navigationOptions: {
