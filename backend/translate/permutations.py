@@ -92,9 +92,54 @@ def delete_word(name, times=1, min_words=2):
 		return " ".join(words)
 
 
-# These were the manipulations that I can think of, please feel free to add more if you think of anything else
+def delete_vowels(name, times=1, min_word_len=1):
+	"""
+	Delete 'times' number of vowels.
+	
+	Rules:
+	1. DO NOT DELETE THE FIRST LETTER
+	2. If the 'min_word_len' is reached for a particular word, no vowels can be deleted from that string
+	3. Do not delete last character unless absolutely necessary
+	4. If you cannot delete 'times' number of vowels, return best result
+	"""
+	pass
 
+def delete_chars_restricted(name, target_length=20, min_word_len=1):
+	"""
+	(Might have to adjust this method periodically, sorry Mitchell)
+	Delete characters from the receipt name until length of `target_length` is achieved
 
+	Rules:
+	1. DO NOT DELETE THE FIRST CHARACTER
+	2. If the 'min_word_len' is reached for a particular word, do not delete from that word
+	   unless necessary to meet the `target_length`
+	3. Do not delete the last character unless it is 's' or necessary to meet the `target_length`
+	"""
+	pass
+
+def initialize_restricted(name, target_word_count=10):
+	"""
+	Keep concatenating/initializing consectuive words until the number of words is at most `target_word_count`
+
+	"""
+	pass
+
+def master_permutation(name, target_length=20, min_word_len=1, vowel_deletion_proportion=.8):
+	"""
+	Optional to implement but kinda helpful to Max.
+
+	Goals by priority:
+	1. Reach `target_length`
+	2. Delete at the minimum `vowel_deletion_proportion`% of the vowels present
+	3. maintain min_word_len
+
+	The order of permutations should be the following:
+	1. Apply concatentations (one of the intialize methods)
+	2. Apply swaps
+	3. Apply deletion of vowels
+	4. Apply deletion of chars restricted
+	"""
+	pass
 
 
 

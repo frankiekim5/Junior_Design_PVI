@@ -3,10 +3,10 @@ from test_lcs import lcs
 from process_data import loadJSON, clean
 
 
-receipt_names = ["G/ADE FR GLAC FREE", "CHIPS AHOY", "PF M/CH MILANO CKI", "KELL FR STRW MINWH"]
-target_names = ["GATORADE FROST THIRST QUENCHER GLACIER FREEZE FLAVORED", "CHIPS AHOY CHEWY COOKIES FAMILY SIZE ", "PEPPERIDGE FARM MILANO MILK CHOCOLATE COOKIES", "MINI WHEATS CEREAL STRAWBERRY"]
+receipt_names = ["G/ADE FR GLAC FREE", "CHIPS AHOY", "PF M/CH MILANO CKI", "KELL FR STRW MINWH", "GREEN ONIONS"]
+target_names = ["GATORADE FROST THIRST QUENCHER GLACIER FREEZE FLAVORED", "CHIPS AHOY CHEWY COOKIES FAMILY SIZE ", "PEPPERIDGE FARM MILANO MILK CHOCOLATE COOKIES", "MINI WHEATS CEREAL STRAWBERRY", "GREEN SCALLION ONIONS"]
 
-def lcs_score(str1, str2):
+def lcs_score(str1, str2, score=True):
     m = len(str1)
     n = len(str2)
     j = 0
@@ -22,14 +22,17 @@ def lcs_score(str1, str2):
             else: 
                 L[i][j] = max(L[i-1][j] , L[i][j-1]) 
     # print(L[-1][-1])
-    return L[-1][-1] / m
+    if score:
+        return L[-1][-1] / m
+    else:
+        return L[-1][-1] == m
 
 def bow(name, one=False):
     # TESTS TO RUN:
     # 1) Include spaces?
     # 2) Exclude numbers?
     # 3) Combo?
-    legals = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    legals = set("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     
     word = np.zeros((len(legals),))
     for letter in clean(name):
@@ -103,11 +106,6 @@ if __name__ == "__main__":
         cosine_scores = test_score(r_name, names, cosine_score_combined, t_name=t_name)
 
         filtered_names = list(map(lambda c: c[1], filter(lambda c: c[0] > 0.5, cosine_scores)))
-        # print(filtered_names[:10])
-        # scores = {}
-        # for score, name in score_names:
-        #     scores[name] = score
-        # print(scores[t_name])
 
         # TESTING LCS SCORES
         lcs_scores = test_score(r_name, filtered_names, lcs_score, t_name=t_name)

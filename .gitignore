@@ -4,7 +4,8 @@ data/
 venv/
 *.log
 *.db
-
+*.json
+./backend
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
