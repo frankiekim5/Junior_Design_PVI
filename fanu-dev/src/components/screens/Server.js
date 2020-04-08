@@ -11,6 +11,9 @@ import {
 import fetch from 'node-fetch';
 import foodPic from '../../img/food.jpg';
 import FloatingButton from './FloatingButton';
+import LoginScreen from './LoginScreen';
+import {accessToken} from './LoginScreen.js';
+import {username} from './LoginScreen.js';
 
 var requestOptions = {
   method: 'POST',
@@ -19,7 +22,7 @@ var requestOptions = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
   },
   /**FIXME: username and accessToken*/
-  body: "username=kmont3&accessToken=fsOZqbnQzWfRmzXOtLwX9jTyu7G1QMOtgIEYXze8MqThrwrw62boaNM96GuqnwqeLJdW64gENVp1vKN83S4Gp5SnG3WflpS9MbBsTaAsKOZMXbRlwiGjtypaqHt4MLoJD9UwZtd2urTQObIQy7gKFFAgQN7huwG2AoOlFSCyBWcMF33GLbUeD4RyVTBzzFDnuScGAMwv9LLEwYvp5tJGNRXgsVWE1cOCQwZJrQCnAYyG2wClqWYU11R3KCWDtPL"
+  body: 'action=login&username=' + {username} + '&accessToken=' + {accessToken},
 };
 
 export default class Server extends Component {
@@ -39,6 +42,8 @@ export default class Server extends Component {
         this.setState({
           isLoading: false,
           dataSource: responseJson,
+          //username: navigation.getParam('username','NO-USER'),
+          //accessToken: navigation.getParam('accessToken','NO-AT'),
         });
       })
       .catch(error => {

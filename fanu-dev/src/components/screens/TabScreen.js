@@ -1,26 +1,17 @@
 import 'react-native-gesture-handler';
-import {
-
-} from 'react-native';
-import {
-
-  Colors,
-
-} from 'react-native/Libraries/NewAppScreen';
+import {} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import OIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import OIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-import Pie from 'react-native-pie'
-import InventoryScreen from './InventoryScreen'
-import SettingsScreen from './SettingsScreen'
+import Pie from 'react-native-pie';
+import InventoryScreen from './InventoryScreen';
+import SettingsScreen from './SettingsScreen';
 // import HomeScreen from './src/components/screens/HomeScreen'
-import MealsScreen from './MealsScreen'
-
-
-import ServerScreen from './Server'
-import HomeScreen from './HomeScreen'
-
+import MealsScreen from './MealsScreen';
+import ServerScreen from './Server';
+import HomeScreen from './HomeScreen';
 import React, {Component} from 'react';
 // import {Component} from 'react';
 import {
@@ -30,29 +21,17 @@ import {
   SectionList,
   TouchableOpacity,
   TextInput,
-  Button
+  Button,
 } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import { createBottomTabNavigator } from 'react-navigation';
-// import { MaterialCommunityIcons } from 'react-native-vector-icons';
-//
-import { NavigationContainer } from '@react-navigation/native';
-import{ createSwitchNavigator} from 'react-navigation';
-// import{DashboardStackNavigator} from './src/components/screens/TabNavigator'
-//
-//
-// //<Stack.Screen name="Home" component={HomeScreen} />
-//
-// // const Stack = createStackNavigator();
-// //
-// // // function Tabs() {
-// // //   return (
-// //
-// // //   )
-// // // }
-//
+
+class TabScreen extends Component {
+  constructor(props) {
+    super(props);
+
+    var username = props.navigation.state.params.username;
+    var accessToken = props.navigation.state.params.accessToken;
+  }
+}
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -67,7 +46,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       },
     },
     Inventory: {
-      screen: InventoryScreen,
+      screen: ServerScreen,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <View>
