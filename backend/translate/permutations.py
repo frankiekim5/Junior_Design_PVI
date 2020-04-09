@@ -157,10 +157,12 @@ def delete_chars_restricted(name, target_length=20, min_word_len=1):
 
 def initialize_restricted(name, target_word_count=10):
 	"""
-	Keep concatenating/initializing consectuive words until the number of words is at most `target_word_count`
+	Keep concatenating/initializing consecutive words until the number of words is at most `target_word_count`
 
 	"""
-	pass
+	words = name.split(" ")
+	words = initialize_words(name, 1, len(words) - target_word_count + 1) 
+	return words
 
 def master_permutation(name, target_length=20, min_word_len=1, vowel_deletion_proportion=.8):
 	"""
@@ -177,8 +179,17 @@ def master_permutation(name, target_length=20, min_word_len=1, vowel_deletion_pr
 	3. Apply deletion of vowels
 	4. Apply deletion of chars restricted
 	"""
-	pass
-
+	words = initialize_restricted(name,int(target_length/min_word_len))
+	words = swap_words(words, int(target_length/min_word_len))
+	counter = words.split(" ")
+	length = 0
+	for i in range(len(counter)):
+		for j in range(len(counter[i])):
+			length += 1
+	words = delete_vowels(words, length - target_length + 1)
+	words = delete_chars_restricted(name, target_length)
+	return words
+	"""Dont think my implementation is quite right here but hope this helps"""
 
 
 def main():
@@ -188,6 +199,8 @@ def main():
 	print(delete_chars(name))
 	print(delete_vowels(name))
 	print(delete_chars_restricted(name))
+	print(initialize_restricted(name,3))
+	print(master_permutation(name,20,1,.5))
 
 
 
