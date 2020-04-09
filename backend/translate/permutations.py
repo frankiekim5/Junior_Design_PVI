@@ -102,7 +102,25 @@ def delete_vowels(name, times=1, min_word_len=1):
 	3. Do not delete last character unless absolutely necessary
 	4. If you cannot delete 'times' number of vowels, return best result
 	"""
-	pass
+	count = 0
+	iterations = 0
+	words = name.split(" ")
+	while count < times:
+		randnum = random.randint(0, len(words) - 1)
+		if len(words[randnum]) > min_word_len:
+			if len(words[randnum]) == 2:
+				if words[randnum][1] in "aeiouAEIOU":
+					words[randnum] = words[randnum][0]
+					count+=1
+			else:
+				character = random.randint(1, len(words[randnum]) - 2)
+				if words[randnum][character] in "aeiouAEIOU":
+					words[randnum] = words[randnum][0:character:] + words[randnum][character+1::]
+					count+=1
+		iterations += 1
+		if iterations > 100000:
+			return " ".join(words)
+	return " ".join(words)
 
 def delete_chars_restricted(name, target_length=20, min_word_len=1):
 	"""
@@ -115,7 +133,27 @@ def delete_chars_restricted(name, target_length=20, min_word_len=1):
 	   unless necessary to meet the `target_length`
 	3. Do not delete the last character unless it is 's' or necessary to meet the `target_length`
 	"""
-	pass
+	
+	length = 0
+	iterations = 0
+	words = name.split(" ")
+	for i in range(len(words)):
+		for j in range(len(words[i])):
+			length += 1
+		
+	while length > target_length:
+		randnum = random.randint(0, len(words) - 1)
+		if len(words[randnum]) > min_word_len:
+			character = random.randint(1, len(words[randnum]) - 1)
+			if character == len(words[randnum])-1:
+				if words[randnum][character] in "sS" or iterations >  1000000:
+					words[randnum] = words[randnum][0:character:] + words[randnum][character+1::]
+					length-=1
+			else:
+				words[randnum] = words[randnum][0:character:] + words[randnum][character+1::]
+				length-=1
+		iterations += 1
+	return " ".join(words)
 
 def initialize_restricted(name, target_word_count=10):
 	"""
@@ -147,9 +185,9 @@ def main():
 	name = "PEPPERIDGE FARM MILANO MILK CHOCOLATE COOKIES"
 	print(swap_words(name))
 	print(concatenate_words(name))
-	print(tokenize_words(name))
 	print(delete_chars(name))
-	print(swap_words(tokenize_words(delete_chars(name))))
+	print(delete_vowels(name))
+	print(delete_chars_restricted(name))
 
 
 
