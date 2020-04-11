@@ -39,13 +39,6 @@ class LoginScreen extends Component {
   }
   
  
-
-  // state = {
-  //     username: '',
-  //     password: '',
-  //     dataSource:[],
-  //     isLoading = true
-  //  }
   handleUsername = text => {
     this.setState({username: text});
   };
@@ -75,16 +68,17 @@ class LoginScreen extends Component {
         this.setState({
           dataSource: data,
           isLoading: false,
-          accessToken: this.state.dataSource.accessToken,
+          //accessToken: this.state.dataSource.accessToken,
           username: user,
 
         });
+
         if (this.state.dataSource.status == 'Login success') {
-          //this.state.dataSource.accessToken
+          this.setState({accessToken:this.state.dataSource.token})
           alert('Login successful!');
           this.props.navigation.navigate(
             'TabScreen',
-            {username: this.state.username,}
+            {username: this.state.username, accessToken: this.state.accessToken}
           );
           //accessToken: this.state.accessToken
           //FIXME:

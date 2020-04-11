@@ -12,30 +12,53 @@ import fetch from 'node-fetch';
 import foodPic from '../../img/food.jpg';
 import FloatingButton from './FloatingButton';
 import LoginScreen from './LoginScreen';
-import {accessToken} from './LoginScreen.js';
-import {username} from './LoginScreen.js';
 
-var requestOptions = {
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-  },
-  /**FIXME: username and accessToken*/
-  body: 'action=login&username=' + {username} + '&accessToken=' + {accessToken},
-};
+// var requestOptions = {
+//   method: 'POST',
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+//   },
+//   /**FIXME: username and accessToken*/
+//   body: 'action=login&username=' + {username} + '&accessToken=' + {accessToken},
+// };
+
+//fetch('http://192.168.1.20:5000/inventory', requestOptions)
+
+var myHeaders = new Headers();
+myHeaders.append(
+  'Content-Type',
+  'application/x-www-form-urlencoded;charset=UTF-8',
+);
+myHeaders.append('Accept', 'application/json');
 
 export default class Server extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoading: true,
       dataSource: [],
+      username: '',
+      accessToken: '',
+      username: this.props.navigation.dangerouslyGetParent().getParam('username'),
+      accessToken: this.props.navigation.dangerouslyGetParent().getParam('accessToken'),
     };
   }
 
+
+
   componentDidMount() {
     /** FIXME: check IP address and port for server*/
+    var raw =
+      'action=login&username=' +
+      this.state.username +
+      '&accessToken=' +
+      this.state.accessToken;
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+    };
     fetch('http://192.168.1.20:5000/inventory', requestOptions)
       .then(response => response.json())
       .then(responseJson => {
