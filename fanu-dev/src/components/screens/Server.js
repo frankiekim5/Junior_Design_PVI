@@ -36,7 +36,7 @@ export default class Server extends Component {
 
   componentDidMount() {
     /** FIXME: check IP address and port for server*/
-    fetch('http://192.168.1.74:5000/inventory', requestOptions)
+    fetch('http://192.168.1.20:5000/inventory', requestOptions)
       .then(response => response.json())
       .then(responseJson => {
         this.setState({

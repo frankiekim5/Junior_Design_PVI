@@ -8,7 +8,6 @@ import {
   TextInput,
 } from 'react-native';
 
-import FloatingButton from './FloatingButton';
 //import TabScreen from './TabScreen';
 
 import FloatingButton from './FloatingButton'
@@ -85,10 +84,9 @@ class LoginScreen extends Component {
           alert('Login successful!');
           this.props.navigation.navigate(
             'TabScreen',
-            {accessToken: this.state.accessToken,
-            username: this.state.username},
+            {username: this.state.username,}
           );
-          
+          //accessToken: this.state.accessToken
           //FIXME:
         } else {
           alert('Login failed. Please try again.');

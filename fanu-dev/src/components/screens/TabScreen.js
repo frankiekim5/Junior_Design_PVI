@@ -22,7 +22,6 @@ import ServerScreen from './Server'
 import HomeScreen from './HomeScreen'
 
 import React, {Component} from 'react';
-// import {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -32,27 +31,12 @@ import {
   TextInput,
   Button
 } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import { createBottomTabNavigator } from 'react-navigation';
-// import { MaterialCommunityIcons } from 'react-native-vector-icons';
-//
 import { NavigationContainer } from '@react-navigation/native';
 import{ createSwitchNavigator} from 'react-navigation';
-// import{DashboardStackNavigator} from './src/components/screens/TabNavigator'
-//
-//
-// //<Stack.Screen name="Home" component={HomeScreen} />
-//
-// // const Stack = createStackNavigator();
-// //
-// // // function Tabs() {
-// // //   return (
-// //
-// // //   )
-// // // }
-//
+
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
