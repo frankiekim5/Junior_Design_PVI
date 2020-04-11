@@ -116,8 +116,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 		email := r.FormValue("email")
-		fmt.Println(password)
-		fmt.Println(username)
 
 		if action == "login" { // Handle 'login' action
 			fmt.Println("User requested login access")
@@ -185,7 +183,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			}
 			// http.Redirect(w, r, "/", 307)
 		} else { // Got action not 'login' or 'register', not legal
-			response = LoginResponse{Token: "", Status: "Illegal POST request, bye"}
+			response = LoginResponse{Token: "", Status: "Illegal POST request, action not legal"}
 		}
 		json.NewEncoder(w).Encode(response)
 
@@ -206,6 +204,7 @@ accessToken: string
 
 func inventory(w http.ResponseWriter, r *http.Request) {
 	response := FoodResponse{Status: "Illegal POST call"}
+	fmt.Println("GOT CALL")
 	switch r.Method {
 	case "GET":
 		// TODO: Make and edit test POST call page for testing Inventory calls
@@ -220,6 +219,8 @@ func inventory(w http.ResponseWriter, r *http.Request) {
 
 		username := r.FormValue("username")
 		token := r.FormValue("accessToken")
+
+		fmt.Println(token, "TEST")
 
 		var attempts int
 		var actualToken string

@@ -1,67 +1,102 @@
 import React, {Component} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, TouchableOpacity } from 'react-native'
-import { RawButton } from 'react-native-gesture-handler';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import fetch from 'node-fetch';
+import foodPic from '../../img/food.jpg';
+import FloatingButton from './FloatingButton';
+import LoginScreen from './LoginScreen';
+import {accessToken} from './LoginScreen.js';
+import {username} from './LoginScreen.js';
 
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-var raw = "'username':'FirstLast',\n'accessToken':\"w1hwVSEOh8j2zCUqnTWbOkvFRzDSnVMKNeQsx3Yqa06QcT8tJ8cPtdeBybW4mhpmEcTy0zhBgKc3BSrCgYnc7vu1mYcXefZpFWY0xfTUw9YbdhxGbmdeCpRrClnBlNqaXYnTTq6SInAmTO2G60kVclm2quuyTxTmCOJrHyUKNzwjQeOv6cVAs8bOPstSux3GQc9JEWYzktisfNBkCv1KQbYzC0kyvEXN0FONRIx5shVA3BfWCA2Kq35kY6jIaAG\"\n";
 var requestOptions = {
   method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  },
+  /**FIXME: username and accessToken*/
+  body: 'action=login&username=' + {username} + '&accessToken=' + {accessToken},
 };
-
-// fetch("127.0.0.1:8080/inventory", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
 
 export default class Server extends Component {
   constructor() {
     super();
     this.state = {
-      isLoading:true,
-      dataSource: []
-    }
+      isLoading: true,
+      dataSource: [],
+    };
   }
-
-  
 
   componentDidMount() {
-    fetch('http://127.0.0.1:8080/inventory', requestOptions).then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        isLoading:false,
-        dataSource: responseJson
+    /** FIXME: check IP address and port for server*/
+    fetch('http://192.168.1.74:5000/inventory', requestOptions)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+          //username: navigation.getParam('username','NO-USER'),
+          //accessToken: navigation.getParam('accessToken','NO-AT'),
+        });
       })
-    })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
-  _renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => alert(item.body)}>
-      <View style={styles.item}>
-        <Text>{item.title}</Text>
+  _renderItem = ({item}) => (
+    <TouchableOpacity onPress={() => alert(item.amount)}>
+      <View style={{flex: 1, flexDirection: 'row', marginBottom: 3}}>
+        <Image style={{width: 80, height: 80, margin: 5}} source={foodPic} />
+        <View style={{flex: 1, justifyContent: 'center', marginLeft: 5}}>
+          <Text style={{fontSize:35, color:'#3969d2', marginBottom:3}}>
+            {item.name}
+          </Text>
+          <Text style={{fontSize:16, color:'black'}}>
+            Amount: {item.amount}
+          </Text>
+          <Text style={{color:'black'}}>
+            Store: {item.store}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
-    
   );
 
+  renderSeparator = () => {
+    return (
+      <View
+        style={{height:1,width:'100%',backgroundColor:'black'}}>
+      </View>
+    )
+  }
+
   render() {
-    if(this.state.isLoading) {
-      return(
+    if (this.state.isLoading) {
+      return (
         <View style= {styles.container}>
           <ActivityIndicator size="large" animating />
         </View>
-      )
-    }else {
+      );
+    } else {
+      //var myArray = this.state.dataSource.foods;
       return (
-        <View style= {styles.container}>
+        <View style={styles.container}>
+          <Text>Status: {this.state.dataSource.status}</Text>
           <FlatList
-            data = {this.state.dataSource}
+            data={this.state.dataSource.foods}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={this._renderItem}
-            keyExtractor={(item, index) => index}
+            ItemSeparatorComponent={this.renderSeparator}
           />
+          <FloatingButton style={{marginBottom: 80, marginLeft: 300}} />
         </View>
       )
     }
@@ -74,8 +109,7 @@ export default class Server extends Component {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      backgroundColor:'#F5FCFF',
   },
   item: {
     padding: 5,

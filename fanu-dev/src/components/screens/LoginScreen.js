@@ -11,6 +11,9 @@ import {
 import FloatingButton from './FloatingButton';
 //import TabScreen from './TabScreen';
 
+import FloatingButton from './FloatingButton'
+import TabScreen from './TabScreen'
+
 
 var myHeaders = new Headers();
 myHeaders.append(
@@ -75,6 +78,7 @@ class LoginScreen extends Component {
           isLoading: false,
           accessToken: this.state.dataSource.accessToken,
           username: user,
+
         });
         if (this.state.dataSource.status == 'Login success') {
           //this.state.dataSource.accessToken
@@ -166,4 +170,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     //padding:15,
   },
+
 });
+

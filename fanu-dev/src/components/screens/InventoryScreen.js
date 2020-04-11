@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SectionList,
-} from 'react-native';
+import {StyleSheet, Text, View, SectionList} from 'react-native';
 import background from '../../img/grocery_bag.jpg';
 import FloatingButton from './FloatingButton'
 
@@ -64,9 +59,8 @@ const InventoryScreen = () => {
           <Text style={styles.header}>{title}</Text>
         )}
       />
-      <FloatingButton style={{ bottom:50, left:325 }}/>
+      <FloatingButton style={{bottom: 50, left: 325}} />
     </View>
-    
   );
 };
 
